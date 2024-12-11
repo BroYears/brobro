@@ -18,10 +18,16 @@ public class Ex20_DateTime {
 		 	시각 - 점, 포인트, 위치
 		 	시간 - 양, 범위
 		 	
+		 	시간 + 시간 = 시각 C.add()
+		 	시각 - 시간 = 시각 C.add()
+		 	시각 - 시각 = 시간 tick - tick
+		 	
+		 	시간 + 시간 = 시간
+		 	시간 - 시간 = 시간
 		
 		 */
 		
-		m1();//F3 -> 정의된 곳을 찾음, Outline으로도 찾을 수 있음
+		//m1();//F3 -> 정의된 곳을 찾음, Outline으로도 찾을 수 있음
 		//m2();
 		//m3();
 		//m4();
@@ -32,8 +38,51 @@ public class Ex20_DateTime {
 	//변수명, 메서드명, 클래스명, 파일명 등 > 식별자를 수정하는 방법(이클립스)
 	private static void m5() {
 		
-		int age = 10;
-		System.out.println(age);
+		//연산
+		//- 시각 - 시간 = 시간
+		
+		//내가 태어나서 살아온 시간?
+		Calendar now = Calendar.getInstance();
+		Calendar birthday = Calendar.getInstance();
+		birthday.set(1994, 6, 17, 14, 30, 0);
+		
+		//System.out.println(now.add());
+		
+		// 2024년 12월 11일 14시 30분 00초
+		//-1999년  6월  1일 14시 30분 00초
+		//--------------------------------
+		//					   0시 0분 0초
+		
+		//tick
+		//Epoch Time, Unix Time
+		//System.out.println(now.getTimeInMillis()); //1,733,897,479,538ms
+		
+		long gap = now.getTimeInMillis() - birthday.getTimeInMillis();
+		
+		System.out.printf("살아온 시간: %,dms\n", gap);
+		System.out.printf("살아온 시간: %,d시간\n", gap / 1000 / 60 / 60);
+		System.out.printf("살아온 시간: %,d일\n", gap / 1000 / 60 / 60 / 24);
+		
+		
+		//수료일까지 며칠?
+		Calendar end = Calendar.getInstance();
+		end.set(2025, 4, 26);
+		
+		gap = end.getTimeInMillis() - now.getTimeInMillis();
+		
+		System.out.printf("수료일까지 남은 일: %d\n",
+							gap / 1000 / 60 / 60 / 24);
+		
+		//오늘 집에 가려면 몇 시간?
+		Calendar out = Calendar.getInstance();
+		out.set(Calendar.HOUR_OF_DAY, 17);
+		out.set(Calendar.MINUTE, 50);
+		
+		System.out.printf("집에가는 남은 시간 ~ : %f시간\n",
+							(out.getTimeInMillis() - now.getTimeInMillis()) / 1000.0 / 60 / 60);
+		
+		
+		
 		
 	}
 
