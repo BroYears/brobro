@@ -36,27 +36,27 @@ public class Q22_DateTime {
 		System.out.printf("'%s'과(와) '%s'의 기념일\n", maleName, femaleName);
 		
 		
-		first.add(first.get(Calendar.DATE), 99);
+		first.add(Calendar.DATE, 99);
 		System.out.printf("100일: %tF\n", first);
 		
 		first = Calendar.getInstance();
 		
-		first.add(first.get(Calendar.DATE), 199);
+		first.add(Calendar.DATE, 199);
 		System.out.printf("200일: %tF\n", first);
 		
 		first = Calendar.getInstance();
 		
-		first.add(first.get(Calendar.DATE), 299);
+		first.add(Calendar.DATE, 299);
 		System.out.printf("300일: %tF\n", first);
 		
 		first = Calendar.getInstance();
 		
-		first.add(first.get(Calendar.DATE), 499);
+		first.add(Calendar.DATE, 499);
 		System.out.printf("500일: %tF\n", first);
 		
 		first = Calendar.getInstance();
 		
-		first.add(first.get(Calendar.DATE), 999);
+		first.add(Calendar.DATE, 999);
 		System.out.printf("1000일: %tF", first);
 		
 	}
