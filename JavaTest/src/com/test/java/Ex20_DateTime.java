@@ -36,8 +36,6 @@ public class Ex20_DateTime {
 		//m7();
 		m8();
 		
-		
-		
 	}//main
 	
 	private static void m8() {
