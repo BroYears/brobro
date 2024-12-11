@@ -31,10 +31,115 @@ public class Ex20_DateTime {
 		//m2();
 		//m3();
 		//m4();
-		m5();
+		//m5();
+		//m6();
+		//m7();
+		m8();
+		
+		
 		
 	}//main
 	
+	private static void m8() {
+		
+		
+		//내가 짠 코드의 실행 소요 시간?
+		//long start = System.currentTimeMillis();
+		long start = System.nanoTime();
+		
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+		System.out.println("내가 짠 코드 실행");
+
+		
+		//long stop = System.currentTimeMillis();
+		long stop = System.nanoTime();
+		
+		System.out.printf("소요시간: %dns", stop - start);
+		
+	}
+
+	private static void m7() {
+		
+		
+		//현재 시각의 tick
+		Calendar now = Calendar.getInstance();
+		System.out.println(now.getTimeInMillis());
+		
+		//전용 메서드(현재 시각 tick)
+		System.out.println(System.currentTimeMillis());//Calendar now = Calendar.getInstance();
+													   //System.out.println(now.getTimeInMillis());랑 똑같음
+		
+		
+		
+	}
+
+	private static void m6() {
+		//시간 + 시간 = 시간
+		//시간 - 시간 = 시간
+		
+		//2시간 30분 + 1시간 10분 = 3시간 40분
+		
+//		Calendar c1 = Calendar.getInstance();
+//		c1.set(Calendar.HOUR, 2);
+//		c1.set(Calendar.MINUTE, 30); - 이러면 시각이라 안됨
+		
+		int h1 = 2;
+		int h2 = 1;
+		
+		System.out.println(h1 + h2);
+		
+		//2시간 30분 + 10분 = 2시간 40분
+		int hour = 2;
+		int min = 30;
+		
+		//min = min + 10;
+		min += 10;
+		
+		System.out.printf("%d시간 %d분\n", hour, min);
+		
+		//2시간 30분 + 40분 = 3시간 10분
+		hour = 2;
+		min = 30;
+		
+		min += 40;
+		
+		hour = hour + (min / 60); //2시간 + 1시간
+		min = min % 60; //70분 -> 10분
+		
+		System.out.printf("%d시간 %d분\n", hour, min);	
+		
+		
+	}
+
 	//변수명, 메서드명, 클래스명, 파일명 등 > 식별자를 수정하는 방법(이클립스)
 	private static void m5() {
 		
