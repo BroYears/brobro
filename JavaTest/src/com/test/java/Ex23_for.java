@@ -32,8 +32,103 @@ public class Ex23_for {
 		//m4();
 		//m5();
 		//m6();
-		m7();
+		//m7();
 		//m8();
+		//m9();
+		//m10();
+		m11();
+	}
+
+	private static void m11() {
+		
+		
+		//난수 만들기
+		//-임의의 수
+		
+		//1. Math 클래스
+		//2. Random 클래스
+	
+		System.out.println(3.14);
+		System.out.println(Math.PI);//Math. -> 수학관련 각종 도구
+		
+		//Returns a double value with a positive sign
+		//greaterthan or equal to 0.0 and less than 1.0
+		//- 0 ~ 1 사이의 값
+		for (int i=0; i<10; i++ ) {
+			
+			//System.out.println(Math.random()); //난수
+			
+			//가공
+			//- 0.0 > 0.0 > 0 
+			//- 0.1 > 1.0 > 1
+			//- 0.5 > 5.0 > 5
+			//- 0.9 > 9.0 > 9
+			//System.out.println((int)(Math.random() * 10));
+		
+			//주사위(1~6)
+			//- 1 ~ 6
+			//- 0 ~ 5
+			//System.out.println((int)(Math.random() * 5)); //0~4
+			//System.out.println((int)(Math.random() * 6) + 1);//0~5 < 1~6
+			
+			//5~8
+			//0~3 + 5 = 5 ~ 8
+			System.out.println((int)(Math.random() * 4) + 5);//0~3 -> 5~8
+			
+			//2, 5, 9, 11
+			
+			
+			
+			
+		}
+	}
+
+	private static void m10() {
+		
+		// 선생님 > 학생 상담(30명)
+		for (int i=1; i<=30; i++) {
+			
+//			if (i >= 16) {
+//				break;
+//			}
+			
+			if (i == 10 || i == 12 || i == 25) {
+				continue;
+			}
+			
+			
+			
+			System.out.println(i + "번 학생 상담 중...");
+			
+		}
+		
+	}
+
+	private static void m9() {
+		
+		//break, continue;
+		
+		for (int i=1; i<=10; i++) {
+			if(i == 5) {
+				break;//자신이 탈출, 클릭하면 탈출 하는 범위 알려줌.
+					  //if문을 탈출하면 의미가 없어져서 예외적으로 상위 조건문 탈출
+			}
+			System.out.println(i);
+		}
+		System.out.println();
+		
+		
+		for (int i=1; i<=10; i++) {
+			if(i == 5) {
+				continue;//만나면 하던 일을 멈추고 머리로 이동
+			}
+			System.out.println(i);
+		}
+		System.out.println();
+	
+	
+	
+	
 	}
 
 	private static void m8() {
@@ -61,9 +156,32 @@ public class Ex23_for {
 //			System.out.println("실행문");
 //		}
 		
-		for (int i=0;;i++) { //비워두면 무한 루프
-			System.out.println("실행문");
+//		for (int i=0;;i++) { //비워두면 무한 루프
+//			System.out.println("실행문");
+//		}
+		
+		//회전을 몇 번? > 무한 루프
+		//요구사항] 사용자가 입력 모든 숫자의 합?
+		//			종료 의사 표현 > 0 입력 
+		Scanner scan = new Scanner(System.in);
+		
+		int sum = 0;
+		
+		for (;;) {
+			
+			System.out.print("숫자: ");
+			int num = scan.nextInt();
+			
+			if (num == 0) {
+				break;
+			}
+			
+			sum += num;
+			
 		}
+		
+		System.out.println(sum);
+		
 	}
 
 	private static void m7() {
