@@ -1,4 +1,4 @@
-package com.test.java;
+package com.test.java.ex;
 
 public class Q17_MethodOver {
 	
