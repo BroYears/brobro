@@ -36,7 +36,23 @@ public class Ex23_for {
 		//m8();
 		//m9();
 		//m10();
-		m11();
+		//m11();
+		m12();
+		
+	}
+
+	private static void m12() {
+		//Hello Java
+		//1. javac.exe Hello.java > Hello.class(바이트, 실행)
+		//2. java.exe Hello > 실행
+		
+		//이클립스 > Ctrl + f11(Run > javac.exe + java.exe)
+						
+		System.out.println("일이삼\r사오");//사오삼
+		
+		System.out.println("일이삼사\b\b오");//일이오사
+											  //한 칸 하려면
+		
 	}
 
 	private static void m11() {
