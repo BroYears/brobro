@@ -235,9 +235,7 @@ public class Ex20_DateTime {
 		now = Calendar.getInstance();
 		now.add(Calendar.MINUTE, 3);
 		System.out.printf("라면드세요 : %tT\n", now);
-		
-		
-		
+						
 	}
 
 	private static void m3() {

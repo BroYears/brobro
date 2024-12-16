@@ -143,7 +143,7 @@ public class Ex05_Output {
 		//
 		
 		int num = 123;
-		System.out.printf("]%d]\n", num); 
+		System.out.printf("[%d]\n", num); 
 		System.out.printf("[%10d]\n", num); 
 		System.out.printf("[%-10d]\n", num);
 		System.out.println();

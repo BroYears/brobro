@@ -9,15 +9,19 @@ public class Q29_Cond {
 		Scanner scan = new Scanner(System.in);
 		
 		System.out.print("첫번째 숫자: ");
-		int num1 = scan.nextInt();
-		
+		int num1 = scan.nextInt(); 		
 		System.out.print("두번째 숫자: ");
 		int num2 = scan.nextInt();
 		
-		String Oper = scan.nextLine();
+		
+		
+		//정수 -> 문자 :
+		//scan.nextLine();
+
+
 		
 		System.out.print("연산자: ");
-		Oper = scan.nextLine();
+		String Oper = scan.nextLine();
 		
 		
 		switch (Oper) {

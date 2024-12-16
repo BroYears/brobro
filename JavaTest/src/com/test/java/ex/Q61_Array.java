@@ -4,15 +4,17 @@ import java.util.Scanner;
 
 public class Q61_Array {
 	
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
+//		
+//		Scanner scan = new Scanner(System.in);
+//		
+//		for (int i=0; i<5; I++) {
+//			
+//	
+//			
+//		}
+//		
 		
-		Scanner scan = new Scanner(System.in);
-		
-		for (int i=0; i<5; I++) {
-			
-		}
-		
-		
-	}
+	
 
 }
