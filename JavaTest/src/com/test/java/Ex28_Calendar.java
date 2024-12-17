@@ -38,7 +38,6 @@ public class Ex28_Calendar {
 		Calendar c1 = Calendar.getInstance();
 		c1.set(year, month -1, 1);
 		
-		
 		int lastDay = c1.getActualMaximum(Calendar.DATE);
 		int dayOfWeek = c1.get(Calendar.DAY_OF_WEEK);
 		System.out.println(dayOfWeek);

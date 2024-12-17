@@ -102,7 +102,7 @@ public class Ex25_while {
 			System.out.print("투입 금액: ");
 			int money = scan.nextInt(); //1000(엔터) -> 버퍼에 엔터가 남아버림 -> 안버려줌 -> 빈 문자열를 입력해 버림
 			
-			//scan.skip("\r\n");
+			scan.skip("\r\n");
 			scan.nextLine();//빈 문자열 버려버리기
 			
 			System.out.print("메뉴 선택: ");			

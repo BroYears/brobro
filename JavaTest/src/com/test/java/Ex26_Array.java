@@ -41,8 +41,28 @@ public class Ex26_Array {
 		//m18();
 		//m19();
 		//m20();
+		m21();
+	
 		
 		
+		
+	}
+
+	private static void m21() {
+
+		int[][] nums = new int [5][5];
+		
+		//입력
+		int num =1;
+		
+		for (int i=0; i<nums.length; i++) {
+			for (int j=0; j<nums[i].length; j++) {
+				nums[i][j] = num;
+				num++;
+			}
+		}
+		//출력 > 항상동일하게
+		printArray(nums);
 		
 		
 	}
@@ -599,7 +619,7 @@ public class Ex26_Array {
 		//[I @ 1f32e575 - @는 구분자 
 		System.out.println(nums); 
 		
-		printArray(nums);
+//		printArray(nums);
 		
 		System.out.println(Arrays.toString(nums));//개발자가 중간에 확인 하려고 많이 씀.
 												  //dump한다고 말함
@@ -614,12 +634,15 @@ public class Ex26_Array {
 		
 	}
 
-	private static void printArray(int[] nums) {
+	private static void printArray(int[][] nums) {
 
 		for(int i=0; i<nums.length; i++) {
-			System.out.printf("nums[&d] = %d\n", i, nums[i]);
-		}
-		
+			for (int j=0; j<nums[0].length; j++) {
+				System.out.printf("%3d", nums[i][j]);
+			}
+			System.out.println();
+		}	
+
 	}
 
 	private static void m8() {
