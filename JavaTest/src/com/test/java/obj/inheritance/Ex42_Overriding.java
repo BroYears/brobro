@@ -38,11 +38,16 @@ public class Ex42_Overriding {
 class OverridingParent {
 	
 	public String name;
-	
+
 	public void hello() {
-		System.out.printf("안녕하세요. 좋은 아침입니다. 저는 %s입니다.\n"
-							, this.name);
+		// TODO Auto-generated method stub
+		
 	}
+	
+//	public void hello() {
+//		System.out.printf("안녕하세요. 좋은 아침입니다. 저는 %s입니다.\n"
+//							, this.name);
+//	}
 	
 }
 //자식을 만들어라 시키면 -> 부모를 먼저 찾음
