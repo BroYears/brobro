@@ -1,6 +1,7 @@
 package com.test.java.collection;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Ex56_ArrayList {
 
@@ -60,10 +61,198 @@ public class Ex56_ArrayList {
 		 */
 		
 		//m1();
-		m2();
-		
+		//m2();
+		//m3();
+		//m4();
+		//m5();
+		m6();
 		
 	}//main
+
+	private static void m6() {
+		
+		//ArrayList의 길이는 가변이다.
+		ArrayList<Integer> list = new ArrayList<Integer>(1000);//방을 1000칸으로 시작
+		
+//		System.out.println(list.size()); //길이 0
+//		
+//		list.add(100);	//new Object[4];
+//		list.add(200);
+//		list.add(300);
+//		
+//		System.out.println(list.size()); //길이 3
+//										 //size는 length랑 다름 -> 빈 방 제외한 방의 갯수를 셈
+//		list.add(400);
+//		list.add(500);	//new Object[8]; 새로 만듦 <- new Object[4];에 있던 값을 덮어 씀
+//						//2배씩 늘림
+//		
+//		list.trimToSize(); 	//남는 size만큼 trim해라
+//							//-> 사용한 size 만큼의 방 갯수만큼 복사하고 거기에 덮어씀
+//							//매번 복사해야해서 비용 발생 -> 자주하면 안좋음.
+//							//데이터를 추가하게 될 지 예측하기 쉽지않음 -> 자주 안쓰게됨.
+//		
+//		
+//		System.out.println(list.size()); //길이 5
+//										 //new O\
+		
+		for (int i=0; i<1000; i++) {
+			//4
+			//8
+			//16
+			//32
+			//64
+			//128
+			//256
+			//512
+			//1024
+			list.add(i);//0칸으로 시작해서 2칸 그리고 2배씩 늘어나는데 이걸 1000개 들어갈 때까지 2배씩 늘려가면서 비용 반복 발생 -> 좋지않은 코드 ->캐퍼시티 사용
+		}
+		
+		System.out.println(list.size()); //1000
+		System.out.println(list);
+		
+		
+	}
+
+	private static void m5() {
+
+		//성적표
+		//- 성적(번호, 학생명, 국어, 영어, 수학, 총점, 평균)
+		//- 성적 x N개(학생 수)
+		
+		//자료형?
+		//- 성적 > 클래스 > Score.java
+		//- 성적 x N개 > 배열 vs ArrayList > 길이? > ArrayList
+		
+		//학생(성적) 명단
+		ArrayList<Score> list = new ArrayList<Score>();
+		
+		Random rnd = new Random();
+		
+		String[] names = { "홍길동", "아무개", "강아지", "고양이", "말", "병아리" };
+		
+		
+		//학생(성적) 객체 생성 + 값 할당
+		for(int i=0; i<names.length; i++) {
+			
+			//60 ~ 100
+			// 0 ~ 	40
+			//+ 60
+			Score s = new Score(i + 1, names[i]
+								, rnd.nextInt(41) + 60
+								, rnd.nextInt(41) + 60
+								, rnd.nextInt(41) + 60); 
+		
+			list.add(s); //명단에 추가
+			
+		}//for
+		
+		//출력
+		System.out.println("======================================================");
+		System.out.println("                   성적표");
+		System.out.println("======================================================");
+		System.out.println("[번호]\t[이름]\t[국어]\t[영어]\t[수학]\t[총점]\t[평균]");
+		
+		//정렬 기준
+		//1. 고정폭 > 왼쪽, 가운데
+		//2. 가변폭 > 왼쪽
+		//1. 숫자
+		// 1.1 수치 > 오른쪽
+		// 1.2 식별자 > 왼쪽, 가운데
+		
+		for (Score s : list) {
+			System.out.printf("%d\t%s\t%5d\t%5d\t%5d\t%5d\t%5.1f\n"
+								, s.getSeq()
+								, s.getName()
+								, s.getKor()
+								, s.getEng()
+								, s.getMath()
+								, s.getTotal()
+								, s.getAvg()
+								);
+		}
+		
+		
+		
+	}
+
+	private static void m4() {
+		
+		//배열
+		//- int[] nums
+		//- String[] txts
+		//객체 배열
+		//- Student[] list
+		//- Random[] list
+		//- Calendar[] list
+		
+		//Cup.java
+		
+		Cup[] list1 = new Cup[3];
+		//Cup c1;
+		//Cup c2;
+		//Cup c3;
+				
+		System.out.println(list1[0]);
+		
+		list1[0] = new Cup("white", 10000);
+		list1[1] = new Cup("green", 12000);
+		list1[2] = new Cup("yellow", 15000);
+		
+		for (Cup c : list1) {
+			System.out.println(c);
+		}
+		System.out.println();
+		
+		
+		ArrayList<Cup> list2 = new ArrayList<Cup>();
+		
+		list2.add(new Cup("white", 10000));
+		list2.add(new Cup("green", 12000));
+		list2.add(new Cup("yellow", 15000));
+		
+		System.out.println(list2.size());
+		System.out.println(list2);
+		
+		for (Cup c : list2) {
+			System.out.println(c);
+		}
+		
+		
+	}
+
+	private static void m3() {
+
+		int[]		ns1 = new int[3];
+		int[][]		ns2 = new int[2][3];
+		int[][][]	ns3 = new int[2][3][4];
+		
+		//ns1
+		ArrayList<Integer> ms1 = new ArrayList<Integer>();
+		ms1.add(100);
+		
+		//ns2
+		ArrayList<ArrayList<Integer>> ms2 
+			= new ArrayList<ArrayList<Integer>>();
+		
+		ms2.add(new ArrayList<Integer>());//
+		ms2.add(new ArrayList<Integer>());//바깥쪽 두 번째 방
+		
+		ms2.get(0).add(100);
+		ms2.get(0).add(200);
+		
+					
+		//ns3
+		ArrayList<ArrayList<ArrayList<Integer>>> ms3 
+			= new ArrayList<ArrayList<ArrayList<Integer>>>();
+		
+		ms3.add(new ArrayList<ArrayList<Integer>>());
+		ms3.get(0).add(new ArrayList<Integer>());
+		ms3.get(0).get(0).add(100);
+				
+		//복잡하니까 걍 쓰지말자
+		
+	}
 
 	private static void m2() {
 
@@ -165,7 +354,7 @@ public class Ex56_ArrayList {
 		System.out.println(list);
 		System.out.println(list.toString());
 		
-				
+		
 		//9. 초기화
 		//- 모든 요소 삭제 > 모든방.remove()
 		//- void clear()
