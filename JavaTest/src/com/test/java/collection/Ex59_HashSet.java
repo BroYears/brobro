@@ -27,7 +27,7 @@ public class Ex59_HashSet {
 		  		
 		  	3. Set
 		  		- 순서가 없는 집합
-		  		- 요소의 식별자가 없다. > 방 번호(X), 방 이름(X) > 방을 구분 할 수가 없다.
+		  		- 요소의 식별자가 없다. > 방 번호(X), 방 이름(X) > 방을 구분 할 수가 없다. -> 데이터로만 확인 가능.
 		  		- 데이터 중복을 허용 X(***) -> 식별자가 없기 때문에
 		  		- 중복 방지 중심
 		  
@@ -35,11 +35,126 @@ public class Ex59_HashSet {
 		 */
 		
 		//m1();
-		m2();
-		
+		//m2();
+		//m3();
+		//m4();
+		//m5();
 		
 		
 	}//main
+
+	private static void m5() {
+		
+		//책장 or 가방 > 노트 보관
+		//1. 동일한 타입의 노트 허용 O > List
+		//2. 동일한 타입의 노트 허용 X > Set
+
+		Note n1 = new Note("A4", "white", 1000);
+		Note n2 = new Note("A4", "black", 1000);
+		Note n3 = new Note("A5", "white", 800);
+		Note n4 = new Note("A4", "white", 1000);//주소값이 달라서 다른객체 -> 추가 됨
+		
+		HashSet<Note> set = new HashSet<Note>();
+		
+		set.add(n1);
+		set.add(n2);
+		set.add(n3);
+		set.add(n4);
+		
+		System.out.println(set);
+		
+	}
+
+	private static void m4() {
+		
+		//데이터 비교
+		//- 값 비교 > 기본형
+		//- 주소값 비교 > 참조형(클래스, 배열, 문자열)
+		
+		
+		
+		//값 비교
+		//- 기본형의 비교
+		int a = 10;
+		int b = 10;
+		int c = 5;
+		c += 5;
+		
+		System.out.println(a == b); //값의 비교
+		System.out.println(a == c); //값의 비교
+		System.out.println();
+		
+		//참조형 비교
+		//- 문자열의 비교는 연산자를 사용하지 말고 equals()를 사용한다.
+		Note n1 = new Note("A4", "white", 1000);
+		Note n2 = new Note("A5", "black", 800);
+		Note n3 = new Note("A4", "white", 1000);
+		Note n4 = n1;
+		
+		
+		//연산자 사용
+		//- 연산자를 사용한 객체 비교 > 주소값 비교 
+		System.out.println(n1 == n2);
+				
+		System.out.printf("n1: " + n1);
+		System.out.println();
+		System.out.printf("n3: " + n3);
+		System.out.println();
+		System.out.println(n1 == n3);
+		
+		System.out.println(n1 == n3);//쌍둥이 느낌 -> 똑같이 생겨도 다른 객체
+		
+		System.out.printf("n4: " + n4);
+		System.out.println();
+		System.out.println(n1 == n4);//-> 참조형이라 주소값이 같아서 같음
+		System.out.println();
+		
+		
+		//equals() 메서드의 결과는 == 연산자와 동일
+		// > equals() 그대로 사용하지 않고 오버라이드해서 사용
+		System.out.println(n1.equals(n3)); //다른 노트 + 값동일
+		System.out.println(n1.equals(n2)); //다른 노트
+		System.out.println(n1.equals(n4)); //같은 노트
+		System.out.println();
+	
+		System.out.println(n1.hashCode()); //메모리 주소값
+		System.out.println(n2.hashCode());
+		System.out.println(n3.hashCode());
+		System.out.println(n4.hashCode()); //n1하고 똑같음
+		
+		
+	}
+
+	private static void m3() {
+	
+		//마트 경품 추첨
+		//- 중복 당첨 허용X > Set
+		//- 중복 당첨 허용O > List or Map > List
+		
+		String[] list = { "홍길동", "아무개", "강아지", "고양이", "병아리", "사자", "호랑이", "개구리", "타조", "햄스터"};
+		
+		Random rnd = new Random();
+		
+		HashSet<String> result1 = new HashSet<String>();//중복안됨
+		ArrayList<String> result2 = new ArrayList<String>();//중복됨
+		
+		while (result1.size() < 5) {
+			result1.add(list[rnd.nextInt(list.length)]);
+		}
+		
+		//while (result2.size() < 5) {
+		for (int i=0; i<5; i++) {
+			result2.add(list[rnd.nextInt(list.length)]);
+		}
+		
+		System.out.println("중복 허용 X");
+		System.out.println(result1);
+		System.out.println("중복 허용 O");
+		System.out.println(result2);
+		
+		
+		
+	}
 
 	private static void m2() {
 		
