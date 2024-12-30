@@ -90,6 +90,9 @@ public class Ex64_Sort {
 				return 0;
 			}
 		});
+		
+		//list.sort((u1, u2) -> u1.getLevel() -u2.getLevel());
+		
 		System.out.println(list);
 	}
 	
