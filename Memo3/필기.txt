@@ -1,0 +1,69 @@
+새 프로젝트
+- name: "Memo3"
+
+
+데이터 > 파일 입출력
+데이터 조작 > 컬렉션
+
+
+많은 업무 > Main 클래스에 집중 > 작업 분산
+
+
+Main 업무 분류(통상적인 분류)
+> 아래의 구성요소들은 일반 클래스 > 역할(Role) 부여
+- Main Class(+ main()) > 1개 > 업무 스스로 구현(X), 대부분 위임(O)
+- Service Class > N개 > 업무 담당 클래스 > 주 업부 구현
+- DAO Class > Data Access Object > 데이터 담당 클래스
+- View Class > 출력 담당 클래스
+- VO(Value Object), DTO(Data Transfer Object) > 데이터 1개 저장 상자
+
+
+패키지
+- com.test.memo > Main.java
+- com.test.memo.dto
+  "com.test.memo.domain" > Memo.java //일반적
+  com.test.memo.vo
+  com.test.memo.entity
+- com.test.memo.dao
+  com.test.memo.persistence
+  "com.test.memo.repsitory" > "MemoDAO.java"
+- "com.test.memo.service" > "MemoService.java"
+- "com.test.memo.view" > "MemoView.java"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
