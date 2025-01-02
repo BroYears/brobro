@@ -315,7 +315,7 @@ public class Ex71_Stream {
 							.forEach(n -> System.out.println(n));
 		System.out.println();
 		
-		//문자여
+		//문자열
 		Data.getStringList(10).stream()
 								//.sorted()
 								//.sorted(Comparator.reverseOrder())

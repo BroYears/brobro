@@ -40,7 +40,7 @@ public class Member {
 		return builder.toString();
 	}
 	
-	//객체의 상태가 동일하면 각틍ㄴ 객체로 취급하기
+	//객체의 상태가 동일하면 같은 객체로 취급하기
 	//1. hashCode() 재정의
 	//2. equals() 재정의
 	@Override
