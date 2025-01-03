@@ -1,1 +1,166 @@
 md -> 마크다운, Markdown
+
+
+1. 기획서
+- 주제 선정
+- "학생 관리 시스템"
+
+- 사용자 계층
+	- 학생
+	- 교사
+	- 교직원
+	
+- 업무
+	- 학생: 성적확인
+	- 교사: 출결관리
+	- 교직원: 학적관리
+	
+- 대상
+	- 중학교
+	- 1~3학년
+	- 학년당 학급 10학급
+	- 학급당 학생 30여명
+	- 교사 > 담임교사, 교사 > 30명 + a
+	- 교직원 > 행정실
+	
+	
+
+2. 요구 분석서	
+- 고객이 요구하는 여러가지 요소를 듣고, 분석하고, 정리하는 업무 단계
+	- 고객이랑 같이 회의
+2.1 고객이 요구하는 사항을 충분히 수집
+2.2 요구사항들 정리
+2.3 최종 정리	-	기본적이지만 제일 중요***
+- 최대한 많이 수집 > 구현 할 수 있는 것만 수집(X) > 어렵게 잡고 하자
+
+
+학생
+- 학년, 반, 번호, 이름
+- 성적 확인하기
+
+선생님
+- 담당학년, 담당반, 담당과목, 이름
+- 출결 등록하기
+- 출결 확인하기
+- 성적 등록하기
+- 성적 확인하기
+
+교직원
+- 부서, 직위, 이름
+- 학생 등록하기
+
+성적
+- 국어, 영어, 수학, 종류(중간, 기말), 총점, 평균
+
+출결
+- 시간(등교, 하교), 상태, 사유
+
+
+3. 순서도
+- draw.io
+
+4. 화면 설계서
+- ppt 활용
+
+5. 클래스 다이어그램(***추가)
+	
+6. 기능명세서(여유~ > 초간단)	
+- 이름 짓는 작업
+	
+7. 데이터 구조
+
+- 학생.txt
+	- 번호,이름,학년,반,번호
+	ex) 1,홍길동,1,1,1
+
+- 선생님.txt
+	- 번호,이름,담당학년,담당반,담당과목
+	ex) 1,이순신,1,1,수학
+
+- 교직원.txt
+	-번호,이름,부서,직위
+	ex) 1,유재석,행정실,과장
+	
+- 성적.txt
+	- 국어,영어,수학,중간,학생번호
+	ex) 100,90,80,중간,1
+	
+	
+- 출결.txt
+	- 등교시간,하교시간,상태,사유
+	ex) 2025-01-03 09:00:00,2025-01-03 15:00:00,정상,없음,1
+		2025-01-03 09:20:00,2025-01-03 15:00:00,지각,늦잠,2
+		2025-01-03 09:00:00,2025-01-03 11:00:00,조퇴,병원,3
+		2025-01-03 09:00:00,2025-01-03 15:00:00,결석,현장학습,4
+
+8. 구현
+8.1 패키지 생성 > 분류 기준
+	8.1.1 업무(기능) 중심
+		- "com.test.school" > 메인
+		- "com.test.school.score" > 성적처리
+		- "com.test.school.attendance" > 출결처리
+	8.1.2 유저 중심
+		- "com.test.school" > 메인
+		- "com.test.school.student" > 학생관련
+		- "com.test.school.teacher" > 선생님관련
+		
+				
+8.2 패키지 생성
+	- "com.test.school" > 메인
+	- "com.test.school.common" > 인터페이스,추상클래스
+	- "com.test.school.student" > 학생관련
+	- "com.test.school.teacher" > 선생님관련
+	- "com.test.school.staff" > 교직원관련
+	- "com.test.school.view" > 출력
+	- "com.test.school.repository" > 데이터관련
+	- "com.test.schhol.domain" > 데이터 저장
+	
+8.3 클래스/인터페이스/추상클래스 생성
+ 	- com.test.school > "Main.java"
+	- com.test.school.common > "SchoolMember.java"(A)
+	- com.test.school.student > "Student.java" (정보담는 상자)
+							  > "StudentService.java" (조작)
+	- com.test.school.teacher > "Teacher.java"
+							  > "TeacherService.java"
+	- com.test.school.staff	  > "Staff.java"
+							  > "StaffService.java"
+	- com.test.school.view	  > "MainView.java"
+							  > "StudentView.java"
+							  > "TeacherView.java"
+							  > "StaffView.java"
+	- com.test.school.repository > "SchoolDAO.java"
+	- com.test.schhol.domain > "Attendance.java"
+							 > "Score.java
+							 
+8.4 구현 가이드
+	8.4.1 정보를 저장하는 클래스 > 파일과 대응
+		- Student.java
+		- Teacher.java
+		- Staff.java
+		- Score.java
+		- Attendance.java
+		
+9. 발표
+- 후기 반드시 적을 것
+- 하기 전과 하고 난 후의 차이점 강조
+
+10. 화면캡처
+- 할 때마다 해주는게 좋을 듯
+
+11. 개발문서
+
+12. 요약본
+- 포폴만들 때 편함
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
