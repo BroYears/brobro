@@ -69,20 +69,25 @@ public class ExpenseService {
 			System.out.printf("%3d\t", i);
 			dayCounter++;
 			
-			if ((i + dayOfWeek - 1 ) % 7 == 0) {
+			if (dayCounter % 7 == 0 || i == lastDay) {
+
 				System.out.println();
 				
 				for (int j = i- ((dayCounter - 1) % 7); j<= i; j++) {
 					if ( j<= 0 ) {
-						System.out.println("");
+						System.out.print("\t");
 					} else {
 						now.set(Calendar.DAY_OF_MONTH, j);
 						String currentDate = String.format("%tF", now);
 						if (dailySalesList.get(j-1).getSalesDate().indexOf(currentDate) >= 0) {
-							System.out.printf("%,d", dailySalesList.get(j-1).getDailySales());
+							System.out.printf("%,d\t", dailySalesList.get(j-1).getDailySales());
+						} else {
+							System.out.print("\t");
 						}
 					}
 				}
+				
+				System.out.println();
 			}
 		}
 				
