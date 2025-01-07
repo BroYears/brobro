@@ -3,7 +3,9 @@ package com.system.restaurant.view;
 import java.util.Calendar;
 import java.util.Scanner;
 
+import com.system.restaurant.expense.DailySales;
 import com.system.restaurant.expense.ExpenseService;
+import com.system.restaurant.expense.VariableExpense;
 
 public class ExpenseView {
 
@@ -14,54 +16,72 @@ public class ExpenseView {
 		System.out.println("\t2. 월별 매출");
 		System.out.println("\t3. 지출 내역확인");
 		
-		ExpenseService.selcetSalese();
+		ExpenseService.selcetSales();
 		
 	}
 	
-	public static void dailySelesCalendar() {
-			
-			Calendar c = Calendar.getInstance();
-			c.set(Calendar.MONTH -1, 1);
-			
-			
-			int lastDay = c.getActualMaximum(Calendar.DATE);
-			int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-
-			System.out.println("\t\t\t일별 매출 ");				
-			System.out.println("\t\t\t\t\t   단위: 원");
-			System.out.println("---------------------------------------------------");
-			System.out.println("일\t월\t화\t수\t목\t금\t토");
-			System.out.println("---------------------------------------------------");
-			
-			for (int i=0; i<dayOfWeek - 1 ; i++) {
-				System.out.print("\t"); 
-			}
-			
-			for (int i=1; i<=lastDay; i++) {
-				
-				System.out.printf("%3d\t", i);
-				
-				if ((i + dayOfWeek - 1 ) % 7 == 0) {
-					
-					System.out.println();
 	
+	
+	
+	public static void dailySalesCalendar() {
 			
-				}
 
-			}
+		System.out.println("\t\t일별 매출 ");				
+		System.out.println("\t\t\t\t\t   단위: 원");
+		System.out.println("---------------------------------------------------");
+		System.out.println("일\t월\t화\t수\t목\t금\t토");
+		System.out.println("---------------------------------------------------");
+		
+		ExpenseService.dailySales();
 			
-			System.out.println();
-			System.out.println("---------------------------------------------------");
-			System.out.println("---------------------------------------------------");
+		System.out.println();
+		System.out.println("-----------------------------------------------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------------------------------------");
+			
+		ExpenseService.returnSales();		
 			
 	}
 	
-//	public static void monthlySelesCalendar() {
-//		
-//		Calendar c = Calendar.getInstance();
-//		
-//		int
-//		
-//
-//	}
+	public static void monthlySalesCalendar() {
+		
+		System.out.println("\t\t\t\t\t월별 매출");
+		System.out.println();
+		System.out.println("\t\t\t\t\t\t\t\t\t\t\t단위: 원");
+		System.out.println("-----------------------------------------------------------------------------------------------------");
+		ExpenseService.monthlySales();
+			
+		System.out.println("-----------------------------------------------------------------------------------------------------");
+		System.out.println("-----------------------------------------------------------------------------------------------------");
+		
+		ExpenseService.returnSales();
+	}
+
+
+
+
+	public static void expeseList() {
+		
+		
+		System.out.println("/t/t지출 내역 확인");
+		System.out.println("\t\t\t\t\t   단위: 원");
+		System.out.println("---------------------------------------------------");
+		System.out.printf("%d월 지출\r\n", (Calendar.getInstance().get(Calendar.MONTH) + 1));
+		System.out.println("---------------------------------------------------");
+		System.out.println("고정 지출");
+		ExpenseService.nonVariableExpense();
+		System.out.println("---------------------------------------------------");
+		System.out.println("변동 지출");
+		ExpenseService.variableExpense();
+		System.out.println("---------------------------------------------------");
+		System.out.println("---------------------------------------------------");
+		
+		ExpenseService.returnSales();
+		
+	}
+	
+	
+		
 }
+
+
+

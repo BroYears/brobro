@@ -2,58 +2,31 @@ package com.system.restaurant.expense;
 
 public class NonVariableExpense {
 
-	private int waterTax;
-	private int electricityBill;
-	private int gasBill;
+	private int no;
 	private int internetFee;
 	private int monthlyRent;
 	private int costOfLabor;
+	private String date;
 	
 	
-	public NonVariableExpense(int waterTax, int electricityBill, int gasBill, int internetFee, int monthlyRent,
-			int costOfLabor) {
-		
+	public NonVariableExpense(int no, int internetFee, int monthlyRent, int costOfLabor, String date) {
 		super();
-		this.waterTax = waterTax;
-		this.electricityBill = electricityBill;
-		this.gasBill = gasBill;
+		this.no = no;
 		this.internetFee = internetFee;
 		this.monthlyRent = monthlyRent;
 		this.costOfLabor = costOfLabor;
-		
+		this.date = date;
 	}
 
-
-	public int getWaterTax() {
-		return waterTax;
+	public int getNo() {
+		return no;
 	}
-
-
-	public void setWaterTax(int waterTax) {
-		this.waterTax = waterTax;
+	
+	public void setNo(int no) {
+		this.no = no;
 	}
-
-
-	public int getElectricityBill() {
-		return electricityBill;
-	}
-
-
-	public void setElectricityBill(int electricityBill) {
-		this.electricityBill = electricityBill;
-	}
-
-
-	public int getGasBill() {
-		return gasBill;
-	}
-
-
-	public void setGasBill(int gasBill) {
-		this.gasBill = gasBill;
-	}
-
-
+	
+	
 	public int getInternetFee() {
 		return internetFee;
 	}
@@ -84,29 +57,32 @@ public class NonVariableExpense {
 	}
 
 
+	public String getDate() {
+		return date;
+	}
+
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+
 	@Override
 	public String toString() {
-		
 		StringBuilder builder = new StringBuilder();
 		
-		builder.append("NonVariableExpense [waterTax=");
-		builder.append(waterTax);
-		builder.append(", electricityBill=");
-		builder.append(electricityBill);
-		builder.append(", gasBill=");
-		builder.append(gasBill);
-		builder.append(", internetFee=");
+		builder.append("NonVariableExpense [internetFee=");
 		builder.append(internetFee);
 		builder.append(", monthlyRent=");
 		builder.append(monthlyRent);
 		builder.append(", costOfLabor=");
 		builder.append(costOfLabor);
+		builder.append(", date=");
+		builder.append(date);
 		builder.append("]");
 		
 		return builder.toString();
 	}
-	
-	
 	
 	
 	
