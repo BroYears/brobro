@@ -43,12 +43,13 @@ public class ExpenseService {
 		variableExpenseLoad();
 		
 		for (VariableExpense s : vlist) {
-			System.out.printf("1. 수도\t\t%,d\t\t%s\r\n", s.getWaterTax(), s.getDate());
-			System.out.printf("2. 전기\t\t%,d\t\t%s\r\n", s.getElectricityBill(), s.getDate());
-			System.out.printf("3. 가스\t\t%,d\t\t%s\r\n", s.getGasBill(), s.getDate());
-			System.out.printf("4. 재료\t\t%,d\t%s\r\n", s.getIngredient(), s.getDate());
-			System.out.printf("5. 기타\t\t%,d\t\t%s\r\n", s.getDescripton(), s.getDate());
+			System.out.printf("4. 수도\t\t%,d\t\t%s\r\n", s.getWaterTax(), s.getDate());
+			System.out.printf("5. 전기\t\t%,d\t\t%s\r\n", s.getElectricityBill(), s.getDate());
+			System.out.printf("6. 가스\t\t%,d\t\t%s\r\n", s.getGasBill(), s.getDate());
+			System.out.printf("7. 재료\t\t%,d\t%s\r\n", s.getIngredient(), s.getDate());
+			System.out.printf("8. 기타\t\t%,d\t\t%s\r\n", s.getDescripton(), s.getDate());
 		}
+		
 	}
 	
 	
@@ -195,6 +196,34 @@ public class ExpenseService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+	}
+
+
+	public static void inExpense() {
+		
+
+		Scanner scan = new Scanner(System.in);
+		String inExpense = scan.nextLine();
+		
+		if (inExpense.equals("1")) {
+			
+		} else if (inExpense.equals("2")) {
+			
+		} else if (inExpense.equals("3")) {
+		
+		} else if (inExpense.equals("4")) {
+	
+		} else if (inExpense.equals("5")) {
+	
+		} else if (inExpense.equals("6")) {
+	
+		} else if (inExpense.equals("7")) {
+	
+		} else if (inExpense.equals("8")) {
+	
+		} 
+				
 		
 	}
 	

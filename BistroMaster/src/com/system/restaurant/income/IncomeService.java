@@ -26,9 +26,7 @@ public class IncomeService {
 			ExpenseView.monthlySalesCalendar();
 		} else if (inSelect.equals("3")) {
 			ExpenseView.expenseList();
-		} else if (inSelect.equals("4")) {
-			ExpenseView.expenseEdit();
-		} else if (inSelect.equals("0")) {
+		}  else if (inSelect.equals("0")) {
 			//초기화면
 			System.out.println("초기화면");
 		} else {
