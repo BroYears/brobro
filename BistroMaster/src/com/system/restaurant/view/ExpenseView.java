@@ -3,9 +3,10 @@ package com.system.restaurant.view;
 import java.util.Calendar;
 import java.util.Scanner;
 
-import com.system.restaurant.expense.DailySales;
 import com.system.restaurant.expense.ExpenseService;
 import com.system.restaurant.expense.VariableExpense;
+import com.system.restaurant.income.DailySales;
+import com.system.restaurant.income.IncomeService;
 
 public class ExpenseView {
 
@@ -15,8 +16,9 @@ public class ExpenseView {
 		System.out.println("\t1. 일별 매출");
 		System.out.println("\t2. 월별 매출");
 		System.out.println("\t3. 지출 내역확인");
+		System.out.println("\t4. 지출 내역 입력 및 수정");
 		
-		ExpenseService.selcetSales();
+		IncomeService.selcetSales();
 		
 	}
 	
@@ -32,13 +34,13 @@ public class ExpenseView {
 		System.out.println("일\t월\t화\t수\t목\t금\t토");
 		System.out.println("---------------------------------------------------");
 		
-		ExpenseService.dailySales();
+		IncomeService.dailySales();
 			
 		System.out.println();
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 			
-		ExpenseService.returnSales();		
+		IncomeService.returnSales();		
 			
 	}
 	
@@ -48,21 +50,21 @@ public class ExpenseView {
 		System.out.println();
 		System.out.println("\t\t\t\t\t\t\t\t\t\t\t단위: 원");
 		System.out.println("-----------------------------------------------------------------------------------------------------");
-		ExpenseService.monthlySales();
+		IncomeService.monthlySales();
 			
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		
-		ExpenseService.returnSales();
+		IncomeService.returnSales();
 	}
 
 
 
 
-	public static void expeseList() {
+	public static void expenseList() {
 		
 		
-		System.out.println("/t/t지출 내역 확인");
+		System.out.println("\t\t지출 내역 확인");
 		System.out.println("\t\t\t\t\t   단위: 원");
 		System.out.println("---------------------------------------------------");
 		System.out.printf("%d월 지출\r\n", (Calendar.getInstance().get(Calendar.MONTH) + 1));
@@ -75,9 +77,37 @@ public class ExpenseView {
 		System.out.println("---------------------------------------------------");
 		System.out.println("---------------------------------------------------");
 		
-		ExpenseService.returnSales();
+		IncomeService.returnSales();
 		
 	}
+
+
+
+
+	public static void expenseEdit() {
+		
+		System.out.println("\t\t지출 내역 확인");
+		System.out.println("\t\t\t\t\t   단위: 원");
+		System.out.println("---------------------------------------------------");
+		System.out.printf("%d월 지출\r\n", (Calendar.getInstance().get(Calendar.MONTH) + 1));
+		System.out.println("---------------------------------------------------");
+		System.out.println("고정 지출");
+		
+		System.out.println("---------------------------------------------------");
+		System.out.println("변동 지출");
+	
+		System.out.println("---------------------------------------------------");
+		System.out.println("---------------------------------------------------");
+		
+		IncomeService.returnSales();
+		
+		
+		
+		
+	}
+	
+	
+	
 	
 	
 		

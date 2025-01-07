@@ -1,4 +1,4 @@
-package com.system.restaurant.expense;
+package com.system.restaurant.income;
 
 public class TotalSales {
 	
