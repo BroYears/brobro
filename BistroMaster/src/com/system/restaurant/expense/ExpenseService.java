@@ -187,7 +187,7 @@ public class ExpenseService {
 				TotalExpense totalExpense = new TotalExpense(Integer.parseInt(temp[0])
 															, Integer.parseInt(temp[1])
 															, temp[2]
-																);
+															);
 				telist.add(totalExpense);
 			}
 			
@@ -207,21 +207,37 @@ public class ExpenseService {
 		String inExpense = scan.nextLine();
 		
 		if (inExpense.equals("1")) {
+			System.out.println("월세: ");
+			scan.next();
 			
 		} else if (inExpense.equals("2")) {
+			System.out.println("인터넷: ");
+			scan.next();
 			
 		} else if (inExpense.equals("3")) {
-		
+			System.out.println("인건비: ");
+			scan.next();
+			
 		} else if (inExpense.equals("4")) {
-	
+			System.out.println("수도: ");
+			scan.next();
+			
 		} else if (inExpense.equals("5")) {
-	
+			System.out.println("전기: ");
+			scan.next();
+			
 		} else if (inExpense.equals("6")) {
-	
+			System.out.println("가스: ");
+			scan.next();
+			
 		} else if (inExpense.equals("7")) {
-	
+			System.out.println("재료: ");
+			scan.next();
+			
 		} else if (inExpense.equals("8")) {
-	
+			System.out.println("기타: ");
+			scan.next();
+			
 		} 
 				
 		
