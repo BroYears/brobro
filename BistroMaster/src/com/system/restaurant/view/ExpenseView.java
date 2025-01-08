@@ -15,7 +15,7 @@ public class ExpenseView {
 		System.out.println("매출관리\r\n");
 		System.out.println("\t1. 일별 매출");
 		System.out.println("\t2. 월별 매출");
-		System.out.println("\t3. 지출 내역확인");
+		System.out.println("\t3. 지출 내역확인 및 수정");
 		
 		IncomeService.selcetSales();
 		
@@ -88,12 +88,6 @@ public class ExpenseView {
 		
 	}
 		
-	
-	
-	
-	
-	
-	
 }
 
 
