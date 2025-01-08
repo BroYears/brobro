@@ -141,9 +141,6 @@ public class ExpenseService {
 					System.out.print("날짜: ");
 					date = scan.nextLine();
 		
-					String[] inParts = date.split("-");
-					String year = inParts[0];
-					String month = inParts[1];
 					
 					boolean sameCheck = false;
 					
@@ -153,6 +150,11 @@ public class ExpenseService {
 							String[] preParts = m.getDate().split("-");
 							String preYear = preParts[0];
 							String preMonth = preParts[1];
+							
+							String[] inParts = date.split("-");
+							String year = inParts[0];
+							String month = inParts[1];
+
 							
 							if(preMonth.equals(month) && preYear.equals(year)) {
 								System.out.println("같은 달이 있습니다.\r\n수정해주세요.");
@@ -184,6 +186,7 @@ public class ExpenseService {
 				System.out.println("고정지출 입력이 완료되었습니다.");
 				
 				nonVariableExpenseSave();
+				IncomeService.returnSales();
 				
 			} else if (select.equals("2")) {//고정 지출 수정
 				
@@ -291,7 +294,6 @@ public class ExpenseService {
 							}
 						}
 
-						
 						break;
 						
 					} else {
@@ -304,12 +306,12 @@ public class ExpenseService {
 				System.out.println("고정지출 수정이 완료되었습니다.");
 				
 				nonVariableExpenseSave();
-				
+				IncomeService.returnSales();
 			}
 				
 		} else if (inExSelect.equals("2")) {//변동 지출 입력, 수정
 			ExpenseView.editSelct();
-			String select = scan.next();
+			String select = scan.nextLine();
 			
 				if (select.equals("1")) {//변동 지출 입력
 				
@@ -326,7 +328,6 @@ public class ExpenseService {
 		
 					if (isNumeric(waterTax)){
 						
-						
 						break;
 					} else {
 						System.out.println("숫자를 입력하세요.");
@@ -335,7 +336,7 @@ public class ExpenseService {
 				}
 				
 				while(true) {
-					System.out.print("전기 ");
+					System.out.print("전기: ");
 					elecelectricityBill = scan.nextLine();
 		
 					if (isNumeric(elecelectricityBill)){
@@ -409,6 +410,7 @@ public class ExpenseService {
 				System.out.println("변동지출 입력이 완료되었습니다.");
 				
 				variableExpenseSave();
+				IncomeService.returnSales();
 				
 			} else if (select.equals("2")) {//변동 지출 수정
 				
@@ -429,13 +431,12 @@ public class ExpenseService {
 						
 						int count = 0;
 						
-						for (NonVariableExpense m : nvlist) {//유효성 검사
+						for (VariableExpense m : vlist) {//유효성 검사
 							
-							System.out.println(count);
 							if(m.getDate().equals(date)) {
 								break;
 							}else {
-								if ((nvlist.size() - 1 ) == count) {
+								if ((vlist.size() - 1 ) == count) {
 									System.out.println("해당 날짜는 존재하지 않습니다.");
 									System.out.print("수정 날짜: ");
 									date = scan.nextLine();
@@ -448,8 +449,11 @@ public class ExpenseService {
 							System.out.print("수도: ");
 							waterTax = scan.nextLine();
 				
+							if (waterTax.equals("")) {
+								break;
+							}
+							
 							if (isNumeric(waterTax)){
-								
 								break;
 							} else {
 								System.out.println("숫자를 입력하세요.");
@@ -458,8 +462,12 @@ public class ExpenseService {
 						}
 						
 						while(true) {
-							System.out.print("전기 ");
+							System.out.print("전기: ");
 							elecelectricityBill = scan.nextLine();
+							
+							if (elecelectricityBill.equals("")) {
+								break;
+							}
 				
 							if (isNumeric(elecelectricityBill)){
 								break;
@@ -472,6 +480,10 @@ public class ExpenseService {
 						while(true) {
 							System.out.print("가스: ");
 							gasBill = scan.nextLine();
+							
+							if (gasBill.equals("")) {
+								break;
+							}
 				
 							if (isNumeric(gasBill)){
 								break;
@@ -485,6 +497,10 @@ public class ExpenseService {
 							System.out.print("재료비: ");
 							ingredient = scan.nextLine();
 							
+							if (ingredient.equals("")) {
+								break;
+							}
+							
 							if (isNumeric(ingredient)){
 								break;
 							} else {
@@ -496,7 +512,11 @@ public class ExpenseService {
 						while(true) {//기타
 							System.out.print("기타: ");
 							descripton = scan.nextLine();
-												
+								
+							if (descripton.equals("")) {
+								break;
+							}
+							
 							if (isNumeric(descripton)){
 								break;
 							} else {
@@ -509,6 +529,10 @@ public class ExpenseService {
 							System.out.print("날짜: ");
 							date = scan.nextLine();
 				
+							if (date.equals("")) {
+								break;
+							}
+							
 							if (isValidFormat(date)) {
 								break;
 							} else {
@@ -518,28 +542,28 @@ public class ExpenseService {
 						}
 						
 						
-						for (NonVariableExpense m : nvlist) {
+						for (VariableExpense m : vlist) {
 							
 							if (m.getDate().equals(date)) {
 								
 								if (!waterTax.equals("")) {
-									m.setInternetFee(Integer.parseInt(waterTax));
+									m.setWaterTax(Integer.parseInt(waterTax));
 								}
 								
 								if (!elecelectricityBill.equals("")) {
-									m.setMonthlyRent(Integer.parseInt(elecelectricityBill));
+									m.setElectricityBill(Integer.parseInt(elecelectricityBill));
 								}
 								
 								if (!gasBill.equals("")) {
-									m.setCostOfLabor(Integer.parseInt(gasBill));
+									m.setGasBill(Integer.parseInt(gasBill));
 								}
 								
 								if (!ingredient.equals("")) {
-									m.setCostOfLabor(Integer.parseInt(ingredient));
+									m.setIngredient(Integer.parseInt(ingredient));
 								}
 								
 								if (!descripton.equals("")) {
-									m.setCostOfLabor(Integer.parseInt(descripton));
+									m.setDescripton(Integer.parseInt(descripton));
 								}
 								
 								if (!date.equals("")) {
@@ -561,6 +585,7 @@ public class ExpenseService {
 				
 				variableExpenseSave();
 				
+				IncomeService.returnSales();
 				
 			}//변동 지출 수정
 			
@@ -579,7 +604,7 @@ public class ExpenseService {
 	
 	private static int getVariableExpenseMaxNo() {
 		
-		return vlist.get(nvlist.size() - 1).getNo() + 1;
+		return vlist.get(vlist.size() - 1).getNo() + 1;
 		
 	}
 
@@ -602,7 +627,8 @@ public class ExpenseService {
     }
 
 
-
+    
+    
 
 
 
