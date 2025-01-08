@@ -4,13 +4,13 @@ public class DailySales {
 
 	private int no;
 	private int dailySales;
-	private String salesDate;
+	private String date;
 	
-	public DailySales(int no, int dailySales, String salesDate) {
+	public DailySales(int no, int dailySales, String date) {
 		super();
 		this.no = no;
 		this.dailySales = dailySales;
-		this.salesDate = salesDate;
+		this.date = date;
 	}
 
 	public int getNo() {
@@ -29,12 +29,12 @@ public class DailySales {
 		this.dailySales = dailySales;
 	}
 
-	public String getSalesDate() {
-		return salesDate;
+	public String getDate() {
+		return date;
 	}
 
-	public void setSalesDate(String salesDate) {
-		this.salesDate = salesDate;
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class DailySales {
 		builder.append(", dailySales=");
 		builder.append(dailySales);
 		builder.append(", salesDate=");
-		builder.append(salesDate);
+		builder.append(date);
 		builder.append("]");
 		
 		return builder.toString();

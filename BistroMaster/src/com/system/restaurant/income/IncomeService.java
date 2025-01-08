@@ -1,7 +1,9 @@
 package com.system.restaurant.income;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -48,13 +50,13 @@ public class IncomeService {
 		int dayCounter = 0;
 		
 		for (int i=0; i<dayOfWeek - 1 ; i++) {
-			System.out.print("\t"); 
+			System.out.print("\t\t"); 
 			dayCounter++;
 		}
 	
 		for (int i=1; i<=lastDay; i++) {
 				
-			System.out.printf("%3d\t", i);
+			System.out.printf("%3d\t\t", i);
 			dayCounter++;
 			
 			if (dayCounter % 7 == 0 || i == lastDay) {
@@ -63,29 +65,25 @@ public class IncomeService {
 				
 				for (int j = i- ((dayCounter - 1) % 7); j<= i; j++) {
 					if ( j<= 0 ) {
-						System.out.print("\t");
+						System.out.print("\t\t");
 					} else {
 						now.set(Calendar.DAY_OF_MONTH, j);
 						String currentDate = String.format("%tF", now);
-						if (dailySalesList.get(j-1).getSalesDate().indexOf(currentDate) >= 0) {
+						if (dailySalesList.get(j-1).getDate().indexOf(currentDate) >= 0) {
 							System.out.printf("%,d\t", dailySalesList.get(j-1).getDailySales());
 						} else {
 							System.out.print("\t");
 						}
 					}
 				}
-				
 				System.out.println();
+				System.out.println("---------------------------------------------------------------------------------------------------------");
 			} 
-		}
-				
-			
-		}	
+		}		
+	}	
 
 	
-	
-	
-	
+
 	
 	public static void monthlySales() {//월 별 순수익
 		
@@ -93,13 +91,12 @@ public class IncomeService {
 	    int nowMonth = now.get(Calendar.MONTH) + 1;
 	    int month = 0;
 	    
-	    
-	    
 	    for ( int i=1; i<=6; i++ ) {//첫 줄 월 표시
 	    	month = nowMonth + i;
             if ( month == 13 ) {
             	month = 1;
             }
+            
             System.out.printf("\t%d월\t", month); 
         }
 	    
@@ -152,13 +149,12 @@ public class IncomeService {
 		System.out.println();
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		
-		
-		
         for ( int i=7; i<=11; i++ ) {//둘 째줄 월 표시
         	month = nowMonth + i;
         	if (month == 13) {
         		month = 1;
         	}
+        	
             System.out.printf("\t%d월\t", month);
             
         }
@@ -210,10 +206,6 @@ public class IncomeService {
 	
 	
 	
-	
-	
-	
-	
 	public static void returnSales() {
 		
 		Scanner scan = new Scanner(System.in);
@@ -231,84 +223,150 @@ public class IncomeService {
 		
 	}
 	
-	//일매출 더미데이터 불러오기
-		public static ArrayList<DailySales> dailySalesList;
-		private final static String DAILYSALESPATH;
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//일매출 더미데이터 불러오기, load, save
+	public static ArrayList<DailySales> dailySalesList;
+	private final static String DAILYSALESPATH;
 		
-		static {
-			DAILYSALESPATH = ".\\data\\일매출\\" + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "월 일매출 더미 데이터.txt";
-			dailySalesList = new ArrayList<>();	
-		}
+	static {
+		DAILYSALESPATH = ".\\data\\일매출\\" + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "월 일매출 더미 데이터.txt";
+		dailySalesList = new ArrayList<>();	
+	}
 		
 		
-		public static void dailySalelsLoad() {
-		
-			String line = null;
+	public static void dailySalelsLoad() {
+	
+		String line = null;
 			
 			
-			try {
+		try {
 				
-				BufferedReader reader = new BufferedReader(new FileReader(DAILYSALESPATH));
+			BufferedReader reader = new BufferedReader(new FileReader(DAILYSALESPATH));
 				
-				//1,9000000,2025-01-01
-				while ((line = reader.readLine()) != null) {
+			//1,9000000,2025-01-01
+			while ((line = reader.readLine()) != null) {
 					
-					String[] temp = line.split(",");
-						
-					DailySales dailySales = new DailySales(Integer.parseInt(temp[0])
+				String[] temp = line.split(",");
+					
+				DailySales dailySales = new DailySales(Integer.parseInt(temp[0])
 														, Integer.parseInt(temp[1])
 														, temp[2]);
-					dailySalesList.add(dailySales);
+				dailySalesList.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
+				dailySalesList.add(dailySales);
 					
 				}
-				
+			
 				
 				reader.close();
 					
-			} catch (Exception e) {
-				e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+	}
+	
+	
+	public static void dailySalesSave() {
+
+		dailySalesList.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));	
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(DAILYSALESPATH));
+			
+			for (DailySales dailysales : dailySalesList) {
+			
+				//1,9000000,2025-01-01
+				writer.write(String.format("%d,%d,%s\r\n"
+							, dailysales.getNo()
+							, dailysales.getDailySales()
+							, dailysales.getDate()
+							));
 			}
-			
-		}
-		public static ArrayList<TotalSales> tslist;
-		private final static String TOTALSALESPATH;
 		
-		static {
-			TOTALSALESPATH = ".\\data\\월매출\\2025월매출 더미 데이터.txt";
-			tslist = new ArrayList<>();	
+			
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
+	}
+	
+	
+	
+	//월별 총매출 더미 데이터 불러오기, load, save
+	public static ArrayList<TotalSales> tslist;
+	private final static String TOTALSALESPATH;
 		
-		public static void totalSalesLoad() {
+	static {
+		TOTALSALESPATH = ".\\data\\월매출\\2025월매출 더미 데이터.txt";
+		tslist = new ArrayList<>();	
+	}
+		
+		
+	public static void totalSalesLoad() {
 			
-			String line = null;
+		String line = null;
 			
 			
-			try {
+		try {
 				
-				BufferedReader reader = new BufferedReader(new FileReader(TOTALSALESPATH));
+			BufferedReader reader = new BufferedReader(new FileReader(TOTALSALESPATH));
 				
-				//1,33180000,2025-01-01
-				while ((line = reader.readLine()) != null) {
+			//1,33180000,2025-01-01
+			while ((line = reader.readLine()) != null) {
 					
-					String[] temp = line.split(",");
+				String[] temp = line.split(",");
 					
-					TotalSales totalSales = new TotalSales(Integer.parseInt(temp[0])
+				TotalSales totalSales = new TotalSales(Integer.parseInt(temp[0])
 															, Integer.parseInt(temp[1])
 															, temp[2]
 															);
-					tslist.add(totalSales);
-				}
-				
-				reader.close();
-				
-			} catch (Exception e) {
-				
-				e.printStackTrace();
-				
+				tslist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
+				tslist.add(totalSales);
 			}
+				
 			
+			reader.close();
+				
+		} catch (Exception e) {
+				
+			e.printStackTrace();
+				
 		}
+			
+	}
+	
+	public static void totalSalesLSave() {
+
+		tslist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(TOTALSALESPATH));
+			
+			for (TotalSales totalSales : tslist) {
+			
+				//1,33180000,2025-01-01
+				writer.write(String.format("%d,%d,%s\r\n"
+							, totalSales.getNo()
+							, totalSales.getSales()
+							, totalSales.getDate()
+							));
+			}
+		
+			writer.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	
