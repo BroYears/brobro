@@ -425,7 +425,7 @@ public class ExpenseService {
 					}
 				}
 				
-				int no = getVariableExpenseMaxNo();
+				int no = getVariableExpenseMaxNo() + 1;
 				
 				
 				vlist.add(new VariableExpense(no
