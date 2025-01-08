@@ -6,7 +6,6 @@ public class TotalSales {
 	private int sales;
 	private String date;
 	
-	
 	public TotalSales(int no, int sales, String date) {
 		super();
 		this.no = no;
