@@ -173,7 +173,7 @@ public class ExpenseService {
 					
 				}
 				
-				int no = getNonVariableExpenseMaxNo();
+				int no = getNonVariableExpenseMaxNo() + 1;
 				
 				
 				nvlist.add(new NonVariableExpense(no
@@ -194,6 +194,7 @@ public class ExpenseService {
 				String monthlyRent = "";
 				String costOfLabor = "";
 				String date = "";
+				String enterDate = "";
 				
 				while(true) {
 					
@@ -224,7 +225,6 @@ public class ExpenseService {
 							internetFee = scan.nextLine();
 				
 							if (internetFee.isEmpty()) {
-								internetFee = "";
 								break;
 							} 
 							
@@ -241,7 +241,6 @@ public class ExpenseService {
 							monthlyRent = scan.nextLine();
 				
 							if (monthlyRent.isEmpty()) {
-								monthlyRent = "";
 								break;
 							} 
 							
@@ -252,18 +251,34 @@ public class ExpenseService {
 								continue;
 							}
 						}
-								
+						
 						while(true) {
-							System.out.print("날짜: ");
-							date = scan.nextLine();
-							
-							if (date.isEmpty()) {
-								date = "";
+							System.out.print("인건비: ");
+							costOfLabor = scan.nextLine();
+				
+							if (monthlyRent.isEmpty()) {
 								break;
 							} 
 							
+							if (isNumeric(monthlyRent)){
+								break;
+							} else {
+								System.out.println("숫자를 입력하세요.");
+								continue;
+							}
+						}
+						
+								
+						while(true) {//날짜
+							
+							System.out.print("날짜: ");
+							enterDate = scan.nextLine();
 				
-							if (isValidFormat(date)) {
+							if (enterDate.equals("")) {
+								break;
+							}
+							
+							if (isValidFormat(enterDate)) {
 								break;
 							} else {
 								System.out.println("0000-00-00의 형식으로 입력해 주세요.");
@@ -276,19 +291,19 @@ public class ExpenseService {
 							
 							if (m.getDate().equals(date)) {
 								
-								if (!internetFee.equals("")) {
+								if (!internetFee.isEmpty()) {
 									m.setInternetFee(Integer.parseInt(internetFee));
 								}
 								
-								if (!monthlyRent.equals("")) {
+								if (!monthlyRent.isEmpty()) {
 									m.setMonthlyRent(Integer.parseInt(monthlyRent));
 								}
 								
-								if (!costOfLabor.equals("")) {
+								if (!costOfLabor.isEmpty()) {
 									m.setCostOfLabor(Integer.parseInt(costOfLabor));
 								}
 								
-								if (!date.equals("")) {
+								if (!date.isEmpty()) {
 									m.setDate(date);
 								}
 							}
@@ -388,6 +403,21 @@ public class ExpenseService {
 					date = scan.nextLine();
 		
 					if (isValidFormat(date)) {
+						
+						boolean sameCheck = false;
+						
+						for (VariableExpense m : vlist) {
+							
+							
+							if(date.equals(m.getDate())) {
+								System.out.println("같은 날이 있습니다.\r\n수정해주세요.");
+								sameCheck = true;
+								break;
+							} 
+						} 
+						if(sameCheck) {
+							continue;
+						}
 						break;
 					} else {
 						System.out.println("0000-00-00의 형식으로 입력해 주세요.");
@@ -420,6 +450,7 @@ public class ExpenseService {
 				String ingredient = "";
 				String descripton = "";
 				String date = "";
+				String enterDate = "";
 				
 				while(true) {
 					
@@ -447,9 +478,9 @@ public class ExpenseService {
 						
 						while(true) {
 							System.out.print("수도: ");
-							waterTax = scan.nextLine();
+							waterTax = scan.nextLine(); //변경값
 				
-							if (waterTax.equals("")) {
+							if (waterTax.isEmpty()) {
 								break;
 							}
 							
@@ -465,7 +496,7 @@ public class ExpenseService {
 							System.out.print("전기: ");
 							elecelectricityBill = scan.nextLine();
 							
-							if (elecelectricityBill.equals("")) {
+							if (elecelectricityBill.isEmpty()) {
 								break;
 							}
 				
@@ -481,7 +512,7 @@ public class ExpenseService {
 							System.out.print("가스: ");
 							gasBill = scan.nextLine();
 							
-							if (gasBill.equals("")) {
+							if (gasBill.isEmpty()) {
 								break;
 							}
 				
@@ -497,7 +528,7 @@ public class ExpenseService {
 							System.out.print("재료비: ");
 							ingredient = scan.nextLine();
 							
-							if (ingredient.equals("")) {
+							if (ingredient.isEmpty()) {
 								break;
 							}
 							
@@ -513,7 +544,7 @@ public class ExpenseService {
 							System.out.print("기타: ");
 							descripton = scan.nextLine();
 								
-							if (descripton.equals("")) {
+							if (descripton.isEmpty()) {
 								break;
 							}
 							
@@ -525,15 +556,18 @@ public class ExpenseService {
 							}
 						}
 						
+						
+						
 						while(true) {//날짜
+							
 							System.out.print("날짜: ");
-							date = scan.nextLine();
+							enterDate = scan.nextLine();
 				
-							if (date.equals("")) {
+							if (enterDate.equals("")) {
 								break;
 							}
 							
-							if (isValidFormat(date)) {
+							if (isValidFormat(enterDate)) {
 								break;
 							} else {
 								System.out.println("0000-00-00의 형식으로 입력해 주세요.");
@@ -541,33 +575,32 @@ public class ExpenseService {
 							}
 						}
 						
-						
 						for (VariableExpense m : vlist) {
 							
 							if (m.getDate().equals(date)) {
 								
-								if (!waterTax.equals("")) {
+								if (!waterTax.isEmpty()) {
 									m.setWaterTax(Integer.parseInt(waterTax));
 								}
 								
-								if (!elecelectricityBill.equals("")) {
+								if (!elecelectricityBill.isEmpty()) {
 									m.setElectricityBill(Integer.parseInt(elecelectricityBill));
 								}
 								
-								if (!gasBill.equals("")) {
+								if (!gasBill.isEmpty()) {
 									m.setGasBill(Integer.parseInt(gasBill));
 								}
 								
-								if (!ingredient.equals("")) {
+								if (!ingredient.isEmpty()) {
 									m.setIngredient(Integer.parseInt(ingredient));
 								}
 								
-								if (!descripton.equals("")) {
+								if (!descripton.isEmpty()) {
 									m.setDescripton(Integer.parseInt(descripton));
 								}
 								
-								if (!date.equals("")) {
-									m.setDate(date);
+								if (!enterDate.isEmpty()) {
+									m.setDate(enterDate);
 								}
 							}
 						}
@@ -598,14 +631,24 @@ public class ExpenseService {
 	
 	private static int getNonVariableExpenseMaxNo() {
 		
-		return nvlist.get(nvlist.size() - 1).getNo() + 1;
-
+		int maxNo =0;
+		for (NonVariableExpense nonVariableExpense : nvlist) {
+			if (nonVariableExpense.getNo() > maxNo) {
+				maxNo = nonVariableExpense.getNo();
+			}
+		}
+		return maxNo;
 	}
 	
 	private static int getVariableExpenseMaxNo() {
 		
-		return vlist.get(vlist.size() - 1).getNo() + 1;
-		
+		int maxNo =0;
+		for (VariableExpense variableExpense : vlist) {
+			if (variableExpense.getNo() > maxNo) {
+				maxNo = variableExpense.getNo();
+			}
+		}
+		return maxNo;
 	}
 
 
