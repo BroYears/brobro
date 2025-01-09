@@ -51,7 +51,6 @@ public class MemoDAO {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(PATH));
 	
 		for (Memo memo : mlist) {
-		
 			//Memo 객체
 			//line = 1●홍길동●메모입니다.●2025-01-02 12:05:40
 			writer.write(String.format("%s●%s●%s●%s\r\n"
