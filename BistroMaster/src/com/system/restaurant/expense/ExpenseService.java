@@ -626,6 +626,8 @@ public class ExpenseService {
 				variableExpenseSave();
 				
 			} 		
+		} else {
+			
 		}
 	}
 	
