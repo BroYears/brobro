@@ -22,19 +22,19 @@ import com.system.restaurant.income.TotalSales;
 import com.system.restaurant.view.ExpenseView;
 public class ExpenseService {
 
-	public static void main(String[] args) {
-
-		ExpenseService.recentDailyExpenseSumSave();
-		IncomeService.recentMonthlySalesSave();
-		ExpenseService.totalExpenseLoad();
-		nonVariableExpenseLoad();
-		variableExpenseLoad();//여기 처음에 한 번만 실행
-		
-		ExpenseView.expenseSelect();
-		
-		
-	}
-
+//	public static void main(String[] args) {
+//
+//		ExpenseService.recentDailyExpenseSumSave();
+//		IncomeService.recentMonthlySalesSave();
+//		ExpenseService.totalExpenseLoad();
+//		nonVariableExpenseLoad();
+//		variableExpenseLoad();//여기 처음에 한 번만 실행
+//		
+//		ExpenseView.expenseSelect();
+//		
+//		
+//	}
+//
 
 
 	
@@ -122,7 +122,7 @@ public class ExpenseService {
 				}
 				
 				while(true) {
-					System.out.print("인터넷: ");
+					System.out.print("인건비: ");
 					costOfLabor = scan.nextLine();
 		
 					if (costOfLabor.isEmpty()) {
@@ -187,7 +187,6 @@ public class ExpenseService {
 				System.out.println("고정지출 입력이 완료되었습니다.");
 				
 				nonVariableExpenseSave();
-				IncomeService.returnSales();
 				
 			} else if (select.equals("2")) {//고정 지출 수정
 				
@@ -322,11 +321,7 @@ public class ExpenseService {
 				System.out.println("고정지출 수정이 완료되었습니다.");
 				
 				nonVariableExpenseSave();
-				IncomeService.returnSales();
-			} else {
-				IncomeService.returnSales();
-			}
-				
+			} 				
 		} else if (inExSelect.equals("2")) {//변동 지출 입력, 수정
 			ExpenseView.editSelct();
 			String select = scan.nextLine();
@@ -453,7 +448,6 @@ public class ExpenseService {
 				System.out.println("변동지출 입력이 완료되었습니다.");
 				
 				variableExpenseSave();
-				IncomeService.returnSales();
 				
 			} else if (select.equals("2")) {//변동 지출 수정
 				
@@ -631,14 +625,7 @@ public class ExpenseService {
 				
 				variableExpenseSave();
 				
-				IncomeService.returnSales();
-				
-			} else {
-				IncomeService.returnSales();
-			}
-				
-		} else {
-			IncomeService.returnSales();
+			} 		
 		}
 	}
 	
@@ -734,6 +721,14 @@ public class ExpenseService {
 	}
     
  
+    public static void totalMonthIncome() {
+    	
+    	
+    	
+    	
+    	
+    }
+    
     
 
     

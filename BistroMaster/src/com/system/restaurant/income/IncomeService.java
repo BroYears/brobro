@@ -23,21 +23,28 @@ public class IncomeService {
 		String inSelect = "";
 		
 		Scanner scan = new Scanner(System.in);
+		boolean loop = true;
 		inSelect = scan.nextLine();
 		
-		if (inSelect.equals("1")) {
-			ExpenseView.dailySalesCalendar();
-		} else if (inSelect.equals("2")) {
-			ExpenseView.monthlySalesCalendar();
-		} else if (inSelect.equals("3")) {
-			ExpenseView.expenseList();
-		}  else if (inSelect.equals("0")) {
-			//초기화면
-			System.out.println("초기화면");
-		} else {
-			System.out.println("표기된 숫자만 입력해주세요.");
-			selcetSales();
-		}
+		while (loop) {
+			
+			if (inSelect.equals("1")) {
+				ExpenseView.dailySalesCalendar();
+			} else if (inSelect.equals("2")) {
+				ExpenseView.monthlySalesCalendar();
+			} else if (inSelect.equals("3")) {
+				ExpenseView.expenseList();
+			} else if (inSelect.equals("0")) {
+				// 초기화면
+				loop = false;
+			} else {
+				System.out.println("표기된 숫자만 입력해주세요.");
+			}
+
+		}//while
+		
+		System.out.println("초기 화면으로 돌아갑니다.");
+		
 	}
 	
 	
@@ -241,7 +248,7 @@ public class IncomeService {
 	
 	public static void recentMonthlySalesSave() {
 	
-		totalSalesLoad();
+		IncomeService.totalSalesLoad();
 		
 		LocalDate today = LocalDate.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -272,17 +279,20 @@ public class IncomeService {
 	
 	public static void returnSales() {
 		
+		boolean loop = true;
 		Scanner scan = new Scanner(System.in);
+		
+		while (loop) {
 		String returnMenu = scan.nextLine();
 		
 		if ( returnMenu.equals("1")) {
 			ExpenseView.expenseSelect();
 		} else if (returnMenu.equals("0")) {
 			//초기화면
-			System.out.println("초기화면");
+			loop = false;
 		} else {
 			System.out.println("1 또는 0을 입력해주세요.");
-			returnSales();
+		}
 		}
 		
 	}
