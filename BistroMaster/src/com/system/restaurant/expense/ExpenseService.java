@@ -24,8 +24,11 @@ public class ExpenseService {
 
 	public static void main(String[] args) {
 
+		ExpenseService.recentDailyExpenseSumSave();
 		IncomeService.recentMonthlySalesSave();
-		recentDailyExpenseSumSave();
+		ExpenseService.totalExpenseLoad();
+		nonVariableExpenseLoad();
+		variableExpenseLoad();//여기 처음에 한 번만 실행
 		
 		ExpenseView.expenseSelect();
 		
@@ -37,7 +40,6 @@ public class ExpenseService {
 	
 	public static void nonVariableExpense() {
 		
-		nonVariableExpenseLoad();
 		
 		System.out.printf("- 인터넷\t\t%,d\t\t%s\r\n", nvlist.get(0).getInternetFee(), nvlist.get(0).getDate());
 		System.out.printf("- 월세\t\t%,d\t%s\r\n", nvlist.get(0).getMonthlyRent(), nvlist.get(0).getDate());
@@ -50,7 +52,7 @@ public class ExpenseService {
 	
 	public static void variableExpense() {
 	
-		variableExpenseLoad();
+
 		
 		System.out.printf("- 수도\t\t%,d\t\t%s\r\n", vlist.get(0).getWaterTax(), vlist.get(0).getDate());
 		System.out.printf("- 전기\t\t%,d\t\t%s\r\n", vlist.get(0).getElectricityBill(), vlist.get(0).getDate());

@@ -70,8 +70,12 @@ public class IncomeService {
 					} else {
 						now.set(Calendar.DAY_OF_MONTH, j);
 						String currentDate = String.format("%tF", now);
-						if (dailySalesList.get(j-1).getDate().indexOf(currentDate) >= 0 ) {
-							System.out.printf("%,d\t", dailySalesList.get(j-1).getDailySales());
+						if (( j - 1) < dailySalesList.size()) {
+							if (dailySalesList.get(j-1).getDate().indexOf(currentDate) >= 0 ) {
+								System.out.printf("%,d\t", dailySalesList.get(j-1).getDailySales());
+							} else {
+								System.out.print("\t");
+							}
 						} else {
 							System.out.print("\t");
 						}
@@ -86,7 +90,7 @@ public class IncomeService {
 	
 
 	
-	public static void monthlySales() {//월 별 순수익
+	public static void monthlySales() {//월 별 매출  - 지출 = 순수익
 		
 		Calendar now = Calendar.getInstance();
 	    int nowMonth = now.get(Calendar.MONTH) + 1;
@@ -106,8 +110,6 @@ public class IncomeService {
 	    System.out.println();
 	    
 		
-		ExpenseService.totalExpenseLoad();
-	
 		
 		for (TotalSales s : tslist) {
 			
@@ -132,6 +134,8 @@ public class IncomeService {
 			}
 		}
 	    
+		
+		
 		System.out.println();
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 	    
@@ -181,6 +185,7 @@ public class IncomeService {
             }
         }
         
+               
         System.out.println();
         
         count = 0;
@@ -194,6 +199,7 @@ public class IncomeService {
             	System.out.printf("\t-%,d", s.getExpense());
             }
         }
+               
         
         System.out.println();
         System.out.println("-----------------------------------------------------------------------------------------------------");
@@ -212,7 +218,6 @@ public class IncomeService {
 		    System.out.printf("\t%,d", s.getExpense());
 		}
 		
-		totalSalesLSave();
         System.out.println();
         System.out.println();
 	}
@@ -302,7 +307,7 @@ public class IncomeService {
 	private final static String DAILYSALESPATH;
 		
 	static {
-		DAILYSALESPATH = ".\\data\\일매출\\" + (Calendar.getInstance().get(Calendar.MONTH) + 1) + "월 일매출 더미 데이터.txt";
+		DAILYSALESPATH = ".\\data\\메뉴&재고\\메뉴 총합 데이터.txt";
 		dailySalesList = new ArrayList<>();	
 	}
 		
@@ -322,8 +327,7 @@ public class IncomeService {
 				String[] temp = line.split(",");
 					
 				DailySales dailySales = new DailySales(Integer.parseInt(temp[0])
-														, Integer.parseInt(temp[1])
-														, temp[2]);
+														, temp[1]);
 				
 				dailySalesList.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
 				dailySalesList.add(dailySales);
@@ -349,14 +353,12 @@ public class IncomeService {
 			for (DailySales dailysales : dailySalesList) {
 			
 				//1,9000000,2025-01-01
-				writer.write(String.format("%d,%d,%s\r\n"
-							, dailysales.getNo()
+				writer.write(String.format("%d,%s\r\n"
 							, dailysales.getDailySales()
 							, dailysales.getDate()
 							));
 			}
 		
-			
 			writer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
