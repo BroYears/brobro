@@ -1,11 +1,10 @@
 package com.system.restaurant.view;
 
 public class MenuView {
-
-	private String ingredient;
-	private String drink;
-	private int ea;
-	private String tableNo;
-	
-	
+	public static void main(String[] args) {
+		showMenu();
+	}
+	public static void showMenu() {
+		No5Menu.loadNum5();
+	}
 }
