@@ -25,7 +25,7 @@ public class ExpenseView {
 	
 	
 	public static void dailySalesCalendar() {
-			
+					
 
 		System.out.println("\t\t\t\t\t\t일별 매출 ");				
 		System.out.println("\t\t\t\t\t\t\t\t\t\t\t\t단위: 원");
@@ -88,7 +88,11 @@ public class ExpenseView {
 		
 	}
 		
+	
+	
 }
+
+
 
 
 	

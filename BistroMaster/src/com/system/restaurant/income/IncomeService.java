@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Scanner;
@@ -42,8 +45,6 @@ public class IncomeService {
 		
 		Calendar now = Calendar.getInstance();
 		now.set(Calendar.DAY_OF_MONTH, 1);
-		
-		dailySalelsLoad();
 			
 		int lastDay = now.getActualMaximum(Calendar.DATE);
 		int dayOfWeek = now.get(Calendar.DAY_OF_WEEK);
@@ -69,7 +70,7 @@ public class IncomeService {
 					} else {
 						now.set(Calendar.DAY_OF_MONTH, j);
 						String currentDate = String.format("%tF", now);
-						if (dailySalesList.get(j-1).getDate().indexOf(currentDate) >= 0) {
+						if (dailySalesList.get(j-1).getDate().indexOf(currentDate) >= 0 ) {
 							System.out.printf("%,d\t", dailySalesList.get(j-1).getDailySales());
 						} else {
 							System.out.print("\t");
@@ -90,6 +91,7 @@ public class IncomeService {
 		Calendar now = Calendar.getInstance();
 	    int nowMonth = now.get(Calendar.MONTH) + 1;
 	    int month = 0;
+	    int count = 0;
 	    
 	    for ( int i=1; i<=6; i++ ) {//첫 줄 월 표시
 	    	month = nowMonth + i;
@@ -105,23 +107,27 @@ public class IncomeService {
 	    
 		
 		ExpenseService.totalExpenseLoad();
-		totalSalesLoad();
-		
+	
 		
 		for (TotalSales s : tslist) {
 			
 			System.out.printf("\t%,d", s.getSales());
-			if (s.getNo() == 6) {
+			count ++;
+			if (count == 6) {
 				break;
 			}
+			
 		}
 		
 		System.out.println();
 		
+		count = 0;
+		
 		for (TotalExpense s : ExpenseService.telist) {
 			
 			System.out.printf("\t-%,d", s.getExpense());
-			if (s.getNo() == 6) {
+			count ++;
+			if (count == 6) {
 				break;
 			}
 		}
@@ -163,22 +169,28 @@ public class IncomeService {
         System.out.println();
         System.out.println();
         
+        count = 0;
+        
         for (TotalSales s : tslist) {
         	
-            if (s.getNo() <= 6) { 
+        	count++;
+            if (count <= 6) { 
             	continue;
-            } else if (s.getNo() > 6) {
+            } else if (count > 6) {
             	System.out.printf("\t%,d", s.getSales());
             }
         }
         
         System.out.println();
         
+        count = 0;
+        
         for (TotalExpense s : ExpenseService.telist) {
         	
-            if (s.getNo() <= 6) { 
+        	count++;
+            if (count <= 6) { 
             	continue;
-            } else if (s.getNo() > 6) {
+            } else if (count > 6) {
             	System.out.printf("\t-%,d", s.getExpense());
             }
         }
@@ -186,12 +198,12 @@ public class IncomeService {
         System.out.println();
         System.out.println("-----------------------------------------------------------------------------------------------------");
 		
-        List<TotalExpense> sumList2 = new ArrayList<>();
+        List<TotalExpense> sumList2 = new ArrayList<>();//임시로 넣기
         
         for (int i = 6; i < 12; i++) {
-		    int no = tslist.get(i).getNo();
+		  
 		    int sumExpense = tslist.get(i).getSales() - ExpenseService.telist.get(i).getExpense();
-		    sumList2.add(new TotalExpense(no, sumExpense, null));
+		    sumList2.add(new TotalExpense(0, sumExpense, null));
 		}
 
 		System.out.print("순수익");
@@ -200,10 +212,57 @@ public class IncomeService {
 		    System.out.printf("\t%,d", s.getExpense());
 		}
 		
+		totalSalesLSave();
         System.out.println();
         System.out.println();
 	}
 	
+	
+	public static int dailySalesSum() {//당월 일 매출 더하기
+		
+		dailySalesLoad();
+		
+		int sumDailySales = 0;
+		
+		for (int i=0; i < dailySalesList.size(); i++) {
+		
+			int dailySales = dailySalesList.get(i).getDailySales();
+			sumDailySales = sumDailySales +  dailySales;
+		}
+		
+		return sumDailySales;
+	}
+		
+	
+	public static void recentMonthlySalesSave() {
+	
+		totalSalesLoad();
+		
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+		String formattedDate = today.format(formatter);
+		
+		for (TotalSales totalSales : tslist)  {
+			
+			String[] preParts = totalSales.getDate().split("-");
+			String preYear = preParts[0];
+			String preMonth = preParts[1];
+			
+			String[] currentParts = formattedDate.split("-");
+			String currentYear = currentParts[0];
+			String currentMonth = currentParts[1];
+
+			
+			if(preMonth.equals(currentMonth) && preYear.equals(currentYear)) {
+				totalSales.setSales(dailySalesSum());
+				totalSales.setDate(formattedDate);
+			} 
+		}
+		
+		totalSalesLSave();
+		
+	}	
 	
 	
 	public static void returnSales() {
@@ -223,7 +282,12 @@ public class IncomeService {
 		
 	}
 	
-
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -243,7 +307,7 @@ public class IncomeService {
 	}
 		
 		
-	public static void dailySalelsLoad() {
+	public static void dailySalesLoad() {
 	
 		String line = null;
 			
@@ -260,6 +324,7 @@ public class IncomeService {
 				DailySales dailySales = new DailySales(Integer.parseInt(temp[0])
 														, Integer.parseInt(temp[1])
 														, temp[2]);
+				
 				dailySalesList.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
 				dailySalesList.add(dailySales);
 					

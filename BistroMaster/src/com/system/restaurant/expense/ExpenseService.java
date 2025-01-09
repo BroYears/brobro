@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -18,13 +20,15 @@ import java.util.regex.Pattern;
 import com.system.restaurant.income.IncomeService;
 import com.system.restaurant.income.TotalSales;
 import com.system.restaurant.view.ExpenseView;
-//import com.test.memo.domain.Memo;
-//import com.test.memo.repsitory.MemoDAO;
 public class ExpenseService {
 
 	public static void main(String[] args) {
+
+		IncomeService.recentMonthlySalesSave();
+		recentDailyExpenseSumSave();
 		
 		ExpenseView.expenseSelect();
+		
 		
 	}
 
@@ -35,16 +39,13 @@ public class ExpenseService {
 		
 		nonVariableExpenseLoad();
 		
-		nvlist.sort((n1, n2) -> n2.getDate().compareTo(n1.getDate()));
-		
 		System.out.printf("- 인터넷\t\t%,d\t\t%s\r\n", nvlist.get(0).getInternetFee(), nvlist.get(0).getDate());
 		System.out.printf("- 월세\t\t%,d\t%s\r\n", nvlist.get(0).getMonthlyRent(), nvlist.get(0).getDate());
 		System.out.printf("- 인건비\t\t%,d\t%s\r\n", nvlist.get(0).getCostOfLabor(), nvlist.get(0).getDate());
 		System.out.println("---------------------------------------------------");
 		System.out.printf("- 총합\t\t%,d\r\n", nvlist.get(0).getInternetFee() + nvlist.get(0).getMonthlyRent() + nvlist.get(0).getCostOfLabor());
 		
-		nonVariableExpenseSave();
-		
+
 	}
 	
 	public static void variableExpense() {
@@ -58,8 +59,6 @@ public class ExpenseService {
 		System.out.printf("- 기타\t\t%,d\t\t%s\r\n", vlist.get(0).getDescripton(), vlist.get(0).getDate());
 		System.out.println("---------------------------------------------------");
 		System.out.printf("- 총합\t\t%,d\r\n", vlist.get(0).getWaterTax() + vlist.get(0).getElectricityBill() + vlist.get(0).getGasBill() + vlist.get(0).getIngredient() + vlist.get(0).getDescripton());
-		
-		variableExpenseSave();
 		
 	}
 	
@@ -322,6 +321,8 @@ public class ExpenseService {
 				
 				nonVariableExpenseSave();
 				IncomeService.returnSales();
+			} else {
+				IncomeService.returnSales();
 			}
 				
 		} else if (inExSelect.equals("2")) {//변동 지출 입력, 수정
@@ -408,16 +409,26 @@ public class ExpenseService {
 						
 						for (VariableExpense m : vlist) {
 							
-							
-							if(date.equals(m.getDate())) {
-								System.out.println("같은 날이 있습니다.\r\n수정해주세요.");
+							String[] preParts = m.getDate().split("-");
+							String preYear = preParts[0];
+							String preMonth = preParts[1];
+								
+							String[] inParts = date.split("-");
+							String year = inParts[0];
+							String month = inParts[1];
+
+								
+							if(preMonth.equals(month) && preYear.equals(year)) {
+								System.out.println("같은 달이 있습니다.\r\n수정해주세요.");
 								sameCheck = true;
 								break;
 							} 
 						} 
+						
 						if(sameCheck) {
 							continue;
 						}
+						
 						break;
 					} else {
 						System.out.println("0000-00-00의 형식으로 입력해 주세요.");
@@ -620,16 +631,20 @@ public class ExpenseService {
 				
 				IncomeService.returnSales();
 				
-			}//변동 지출 수정
-			
-			
+			} else {
+				IncomeService.returnSales();
+			}
 				
 		} else {
 			IncomeService.returnSales();
 		}
 	}
 	
-	private static int getNonVariableExpenseMaxNo() {
+	
+	
+	
+	
+	private static int getNonVariableExpenseMaxNo() {//변동지출 입력 시 pk최신화를 위한 max
 		
 		int maxNo =0;
 		for (NonVariableExpense nonVariableExpense : nvlist) {
@@ -640,7 +655,7 @@ public class ExpenseService {
 		return maxNo;
 	}
 	
-	private static int getVariableExpenseMaxNo() {
+	private static int getVariableExpenseMaxNo() {//고정지출 입력 시 pk최신화를 위한 max
 		
 		int maxNo =0;
 		for (VariableExpense variableExpense : vlist) {
@@ -651,8 +666,9 @@ public class ExpenseService {
 		return maxNo;
 	}
 
+	
 
-	public static boolean isNumeric(String input) {
+	public static boolean isNumeric(String input) {//숫자확인 유효성 검사
 		
 		try {
 			Integer.parseInt(input);
@@ -662,17 +678,66 @@ public class ExpenseService {
 		}
 	}
 
-    public static boolean isValidFormat(String date) {
+    public static boolean isValidFormat(String date) {//날짜기입 형태 유효성검사
 	    String regex = "^\\d{4}-\\d{2}-\\d{2}$";
 	        
 	    return Pattern.matches(regex, date);
 	    
     }
 
+    public static int dailyExpenseSum() {
+    	
+    	dailyExpenseLoad();
+    	
+    	int sumDailyExpense = 0;
+		
+		for (int i=0; i < delist.size(); i++) {
+		
+			int dailyExpnese = delist.get(i).getDailyExpense();
+			sumDailyExpense = sumDailyExpense +  dailyExpnese;
+		}
+		
+		return sumDailyExpense;
+    	
+    }
+    
+    public static void recentDailyExpenseSumSave() {
+    	
+		variableExpenseLoad();
+		
+		LocalDate today = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		
+		String formattedDate = today.format(formatter);
+		
+		for (VariableExpense variableExpense : vlist)  {
+			
+			String[] preParts = variableExpense.getDate().split("-");
+			String preYear = preParts[0];
+			String preMonth = preParts[1];
+			
+			String[] currentParts = formattedDate.split("-");
+			String currentYear = currentParts[0];
+			String currentMonth = currentParts[1];
+
+			
+			if(preMonth.equals(currentMonth) && preYear.equals(currentYear)) {
+				variableExpense.setIngredient(dailyExpenseSum());
+				variableExpense.setDate(formattedDate);
+			} 
+		}
+		
+		variableExpenseSave();
+		
+	}
+    
+ 
+    
 
     
     
-
+    
+    
 
 
 
@@ -907,6 +972,77 @@ public class ExpenseService {
 		}
 		
 	}
+	
+	public static ArrayList<DailyExpense> delist;//일일 지출비(재료비)
+	private final static String DAILYEXPENSEPATH;
+	
+	static {
+		DAILYEXPENSEPATH = ".\\data\\일지출\\일일총재료비.txt";
+		delist = new ArrayList<>();	
+	}
+	
+	
+	public static void dailyExpenseLoad() {
+		
+		String line = null;
+		
+		
+		try {
+			
+			
+			BufferedReader reader = new BufferedReader(new FileReader(DAILYEXPENSEPATH));
+			
+			//1,33180000,2025-01-01
+			while ((line = reader.readLine()) != null) {
+				
+				String[] temp = line.split(",");
+				
+				DailyExpense dailyExpense = new DailyExpense(Integer.parseInt(temp[0])
+															, Integer.parseInt(temp[1])
+															, temp[2]
+															);
+				delist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
+				delist.add(dailyExpense);
+			}
+			
+			
+			reader.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void dailyExpenseSave() {
+
+		delist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
+		try {
+			
+			BufferedWriter writer = new BufferedWriter(new FileWriter(TOTALEXPENSEPATH));
+			
+			for (DailyExpense dailyExpense : delist) {
+				
+				//1,33180000,2025-01-01
+				writer.write(String.format("%d,%d,%s\r\n"
+											, dailyExpense.getNo()
+											, dailyExpense.getDailyExpense()
+											, dailyExpense.getDate()
+											));
+			}
+		
+			writer.close();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	
+	
 	
 }
 
