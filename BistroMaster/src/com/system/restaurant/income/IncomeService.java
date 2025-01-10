@@ -17,37 +17,6 @@ import com.system.restaurant.expense.TotalExpense;
 import com.system.restaurant.view.ExpenseView;
 
 public class IncomeService {
-
-	public static void selcetSales() {
-		
-		String inSelect = "";
-		
-		Scanner scan = new Scanner(System.in);
-		boolean loop = true;
-		inSelect = scan.nextLine();
-		
-		while (loop) {
-			
-			if (inSelect.equals("1")) {
-				ExpenseView.dailySalesCalendar();
-			} else if (inSelect.equals("2")) {
-				ExpenseView.monthlySalesCalendar();
-			} else if (inSelect.equals("3")) {
-				ExpenseView.expenseList();
-			} else if (inSelect.equals("0")) {
-				// 초기화면
-				loop = false;
-			} else {
-				System.out.println("표기된 숫자만 입력해주세요.");
-			}
-
-		}//while
-		
-		System.out.println("초기 화면으로 돌아갑니다.");
-		
-	}
-	
-	
 	public static void dailySales() {
 		
 		Calendar now = Calendar.getInstance();
@@ -104,6 +73,7 @@ public class IncomeService {
 	    int month = 0;
 	    int count = 0;
 	    
+	        
 	    for ( int i=1; i<=6; i++ ) {//첫 줄 월 표시
 	    	month = nowMonth + i;
             if ( month == 13 ) {
@@ -274,27 +244,6 @@ public class IncomeService {
 		
 		totalSalesLSave();
 		
-	}	
-	
-	
-	public static void returnSales() {
-		
-		boolean loop = true;
-		Scanner scan = new Scanner(System.in);
-		
-		while (loop) {
-		String returnMenu = scan.nextLine();
-		
-		if ( returnMenu.equals("1")) {
-			ExpenseView.expenseSelect();
-		} else if (returnMenu.equals("0")) {
-			//초기화면
-			loop = false;
-		} else {
-			System.out.println("1 또는 0을 입력해주세요.");
-		}
-		}
-		
 	}
 	
 	
@@ -324,33 +273,34 @@ public class IncomeService {
 		
 	public static void dailySalesLoad() {
 	
-		String line = null;
+		if (dailySalesList.isEmpty()) {
+			String line = null;
 			
 			
-		try {
+			try {
 				
-			BufferedReader reader = new BufferedReader(new FileReader(DAILYSALESPATH));
+				BufferedReader reader = new BufferedReader(new FileReader(DAILYSALESPATH));
 				
-			//1,9000000,2025-01-01
-			while ((line = reader.readLine()) != null) {
+				//1,9000000,2025-01-01
+				while ((line = reader.readLine()) != null) {
 					
-				String[] temp = line.split(",");
+					String[] temp = line.split(",");
 					
-				DailySales dailySales = new DailySales(Integer.parseInt(temp[0])
+					DailySales dailySales = new DailySales(Integer.parseInt(temp[0])
 														, temp[1]);
 				
-				dailySalesList.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
-				dailySalesList.add(dailySales);
+					dailySalesList.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
+					dailySalesList.add(dailySales);
 					
-				}
+					}
 			
 				
-				reader.close();
+					reader.close();
 					
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-			
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
 	}
 	
 	
@@ -390,35 +340,36 @@ public class IncomeService {
 		
 	public static void totalSalesLoad() {
 			
-		String line = null;
+		if (dailySalesList.isEmpty()) {
+			String line = null;
 			
 			
-		try {
+			try {
 				
-			BufferedReader reader = new BufferedReader(new FileReader(TOTALSALESPATH));
+				BufferedReader reader = new BufferedReader(new FileReader(TOTALSALESPATH));
 				
-			//1,33180000,2025-01-01
-			while ((line = reader.readLine()) != null) {
+				//1,33180000,2025-01-01
+				while ((line = reader.readLine()) != null) {
 					
-				String[] temp = line.split(",");
+					String[] temp = line.split(",");
 					
-				TotalSales totalSales = new TotalSales(Integer.parseInt(temp[0])
-															, Integer.parseInt(temp[1])
-															, temp[2]
-															);
-				tslist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
-				tslist.add(totalSales);
+					TotalSales totalSales = new TotalSales(Integer.parseInt(temp[0])
+																, Integer.parseInt(temp[1])
+																, temp[2]
+																);
+						tslist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
+					tslist.add(totalSales);
+				}
+				
+			
+				reader.close();
+				
+			} catch (Exception e) {
+				
+				e.printStackTrace();
+				
 			}
-				
-			
-			reader.close();
-				
-		} catch (Exception e) {
-				
-			e.printStackTrace();
-				
-		}
-			
+		}	
 	}
 	
 	public static void totalSalesLSave() {

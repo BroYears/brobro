@@ -22,21 +22,6 @@ import com.system.restaurant.income.TotalSales;
 import com.system.restaurant.view.ExpenseView;
 public class ExpenseService {
 
-//	public static void main(String[] args) {
-//
-//		ExpenseService.recentDailyExpenseSumSave();
-//		IncomeService.recentMonthlySalesSave();
-//		ExpenseService.totalExpenseLoad();
-//		nonVariableExpenseLoad();
-//		variableExpenseLoad();//여기 처음에 한 번만 실행
-//		
-//		ExpenseView.expenseSelect();
-//		
-//		
-//	}
-//
-
-
 	
 	public static void nonVariableExpense() {
 		
@@ -52,7 +37,6 @@ public class ExpenseService {
 	
 	public static void variableExpense() {
 	
-
 		
 		System.out.printf("- 수도\t\t%,d\t\t%s\r\n", vlist.get(0).getWaterTax(), vlist.get(0).getDate());
 		System.out.printf("- 전기\t\t%,d\t\t%s\r\n", vlist.get(0).getElectricityBill(), vlist.get(0).getDate());
@@ -187,6 +171,7 @@ public class ExpenseService {
 				System.out.println("고정지출 입력이 완료되었습니다.");
 				
 				nonVariableExpenseSave();
+				totalMonthlyExpense();
 				
 			} else if (select.equals("2")) {//고정 지출 수정
 				
@@ -321,6 +306,7 @@ public class ExpenseService {
 				System.out.println("고정지출 수정이 완료되었습니다.");
 				
 				nonVariableExpenseSave();
+				totalMonthlyExpense();
 			} 				
 		} else if (inExSelect.equals("2")) {//변동 지출 입력, 수정
 			ExpenseView.editSelct();
@@ -448,6 +434,7 @@ public class ExpenseService {
 				System.out.println("변동지출 입력이 완료되었습니다.");
 				
 				variableExpenseSave();
+				totalMonthlyExpense();
 				
 			} else if (select.equals("2")) {//변동 지출 수정
 				
@@ -461,7 +448,7 @@ public class ExpenseService {
 				
 				while(true) {
 					
-					System.out.print("수정 날짜:");
+					System.out.print("수정 날짜: ");
 					date = scan.nextLine();
 					
 					
@@ -624,7 +611,7 @@ public class ExpenseService {
 				System.out.println("변동지출 수정이 완료되었습니다.");
 				
 				variableExpenseSave();
-				
+				totalMonthlyExpense();
 			} 		
 		} else {
 			
@@ -722,15 +709,41 @@ public class ExpenseService {
 		
 	}
     
- 
-    public static void totalMonthIncome() {
-    	
-    	
-    	
-    	
-    	
-    }
     
+    public static void totalMonthlyExpense() {
+    
+
+    	BufferedWriter writer = null;
+    	
+    	try {
+    		writer = new BufferedWriter(new FileWriter(TOTALEXPENSEPATH));
+    	} catch (IOException e) {
+    		throw new RuntimeException(e);
+    	}
+
+    	int total = 0;
+    	for (int i = 0; i < vlist.size(); i++) {
+    		total = vlist.get(i).getTotalPrice() + nvlist.get(i).getTotalPrice();
+//    		System.out.println(vlist.get(i).getTotalPrice());
+//    		System.out.println(nvlist.get(i).getTotalPrice());
+//    		System.out.println(total);
+            telist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
+    		String txt = String.format("%d,%d,%s\n", i, total, vlist.get(i).getDate());
+    		try {
+    			writer.write(txt);
+    		} catch (IOException e) {
+    			throw new RuntimeException(e);
+    		}
+    	}
+
+    	try {
+    		writer.close();
+    	} catch (IOException e) {
+    		throw new RuntimeException(e);
+    	}
+
+
+    }
     
 
     
@@ -762,19 +775,20 @@ public class ExpenseService {
 
 	public static void nonVariableExpenseLoad() {
 		
-		String line = null;
+		if(nvlist.isEmpty()){
+			String line = null;
 		
 		
 		try {
 			
 			BufferedReader reader = new BufferedReader(new FileReader(NONVEXPENSEPATH));
 			
-		//1,3000000,50000,15500000,2025-01-01
-			while ((line = reader.readLine()) != null) {
+				//1,3000000,50000,15500000,2025-01-01
+				while ((line = reader.readLine()) != null) {
 				
-				String[] temp = line.split(",");
+					String[] temp = line.split(",");
 					
-				NonVariableExpense nvExpense = new NonVariableExpense(Integer.parseInt(temp[0])
+					NonVariableExpense nvExpense = new NonVariableExpense(Integer.parseInt(temp[0])
 																	, Integer.parseInt(temp[1])
 																	, Integer.parseInt(temp[2])
 																	, Integer.parseInt(temp[3])
@@ -782,43 +796,54 @@ public class ExpenseService {
 																	);
 				nvlist.sort((n1, n2) -> n2.getDate().compareTo(n1.getDate()));
 				nvlist.add(nvExpense);
-			}
+				}
 			
 			
-			reader.close();
+				reader.close();
 				
-		} catch (Exception e) {
-			e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
 	}
 	
 	
 	public static void nonVariableExpenseSave() {
 
-		try {
-			nvlist.sort((n1, n2) -> n2.getDate().compareTo(n1.getDate()));
+		nvlist.sort((n1, n2) -> n2.getDate().compareTo(n1.getDate()));
+		int count = 0;
+		
+		if (nvlist.size() < 12) {
+			try {
+				
+				BufferedWriter writer = new BufferedWriter(new FileWriter(NONVEXPENSEPATH));
 			
-			BufferedWriter writer = new BufferedWriter(new FileWriter(NONVEXPENSEPATH));
-			
-			for (NonVariableExpense nvExpense : nvlist) {
-				//1,3000000,50000,15500000,2025-01-01
-				writer.write(String.format("%d,%d,%d,%d,%s\r\n"
+				for (NonVariableExpense nvExpense : nvlist) {
+					//1,3000000,50000,15500000,2025-01-01
+					writer.write(String.format("%d,%d,%d,%d,%s\r\n"
 											, nvExpense.getNo()
 											, nvExpense.getInternetFee()
 											, nvExpense.getMonthlyRent()
 											, nvExpense.getCostOfLabor()
 											, nvExpense.getDate()
 											));
+				}
+		
+			
+				writer.close();
+			
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		
-			
-			writer.close();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		} else {
+			for (NonVariableExpense vExpense: nvlist) {
+				count++;
+				if(nvlist.size() == count ) {
+						nvlist.remove(vExpense);
+						break;
+				}
+			}
+		}	
 	}
 	
 	
@@ -834,49 +859,54 @@ public class ExpenseService {
 	
 	
 	public static void variableExpenseLoad() {
-		
-		String line = null;
-		
-		
-		try {
-			
-			BufferedReader reader = new BufferedReader(new FileReader(VEXPENSEPATH));
-			
-			//1,300000,250000,150000,13800000,130000,2025-01-01
-			while ((line = reader.readLine()) != null) {
-				
-				String[] temp = line.split(",");
-				
-				VariableExpense vExpense = new VariableExpense(Integer.parseInt(temp[0])
-															, Integer.parseInt(temp[1])
-															, Integer.parseInt(temp[2])
-															, Integer.parseInt(temp[3])
-															, Integer.parseInt(temp[4])
-															, Integer.parseInt(temp[5])
-															, temp[6]
-																);
-				vlist.sort((n1, n2) -> n2.getDate().compareTo(n1.getDate()));
-				vlist.add(vExpense);
+
+		if(vlist.isEmpty()){
+			String line = null;
+
+
+			try {
+
+				BufferedReader reader = new BufferedReader(new FileReader(VEXPENSEPATH));
+
+				//1,300000,250000,150000,13800000,130000,2025-01-01
+				while ((line = reader.readLine()) != null) {
+
+					String[] temp = line.split(",");
+
+					VariableExpense vExpense = new VariableExpense(Integer.parseInt(temp[0])
+							, Integer.parseInt(temp[1])
+							, Integer.parseInt(temp[2])
+							, Integer.parseInt(temp[3])
+							, Integer.parseInt(temp[4])
+							, Integer.parseInt(temp[5])
+							, temp[6]
+					);
+					vlist.sort((n1, n2) -> n2.getDate().compareTo(n1.getDate()));
+					vlist.add(vExpense);
+				}
+
+
+				reader.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			
-			
-			reader.close();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		
 	}
 	
 
 	public static void variableExpenseSave() {
 
 		vlist.sort((n1, n2) -> n2.getDate().compareTo(n1.getDate()));
-		try {
+		int count = 0;
+		
+		if (vlist.size() < 12) {
 			
-			BufferedWriter writer = new BufferedWriter(new FileWriter(VEXPENSEPATH));
+			try {
 			
-			for (VariableExpense vExpense : vlist) {
+				BufferedWriter writer = new BufferedWriter(new FileWriter(VEXPENSEPATH));
+			
+					for (VariableExpense vExpense : vlist) {
 			
 				//1,300000,250000,150000,13800000,130000,2025-01-01
 				writer.write(String.format("%d,%d,%d,%d,%d,%d,%s\r\n"
@@ -888,15 +918,23 @@ public class ExpenseService {
 											, vExpense.getDescripton()
 											, vExpense.getDate()
 											));
-			}
+					}
 		
-		
-			writer.close();
-		
+					writer.close();
 			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} 
+		else {
+			for (VariableExpense vExpense: vlist) {
+				count++;
+				if(vlist.size() == count ) {
+						vlist.remove(vExpense);
+						break;
+				}
+			}
+		}	
 		
 	}
 	
@@ -916,39 +954,41 @@ public class ExpenseService {
 	
 	public static void totalExpenseLoad() {
 		
-		String line = null;
+		if(telist.isEmpty()){
+			String line = null;
 		
 		
-		try {
+			try {
 			
 			
-			BufferedReader reader = new BufferedReader(new FileReader(TOTALEXPENSEPATH));
+				BufferedReader reader = new BufferedReader(new FileReader(TOTALEXPENSEPATH));
 			
-			//1,33180000,2025-01-01
-			while ((line = reader.readLine()) != null) {
+				//1,33180000,2025-01-01
+				while ((line = reader.readLine()) != null) {
 				
-				String[] temp = line.split(",");
+					String[] temp = line.split(",");
 				
-				TotalExpense totalExpense = new TotalExpense(Integer.parseInt(temp[0])
-															, Integer.parseInt(temp[1])
-															, temp[2]
-															);
-				telist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
-				telist.add(totalExpense);
+					TotalExpense totalExpense = new TotalExpense(Integer.parseInt(temp[0])
+																, Integer.parseInt(temp[1])
+																, temp[2]
+																);
+					telist.sort((n1, n2) -> n2.getDate().compareTo(n1.getDate()));
+					telist.add(totalExpense);
+				}
+			
+			
+				reader.close();
+			
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			
-			
-			reader.close();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 		
 	}
 	
 	public static void totalExpenseSave() {
 
-		telist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
+		telist.sort((n1, n2) -> n2.getDate().compareTo(n1.getDate()));
 		try {
 			
 			BufferedWriter writer = new BufferedWriter(new FileWriter(TOTALEXPENSEPATH));
@@ -976,41 +1016,41 @@ public class ExpenseService {
 	private final static String DAILYEXPENSEPATH;
 	
 	static {
-		DAILYEXPENSEPATH = ".\\data\\일지출\\일일총재료비.txt";
+		DAILYEXPENSEPATH = ".\\data\\일지출\\일지출.txt";
 		delist = new ArrayList<>();	
 	}
 	
 	
 	public static void dailyExpenseLoad() {
 		
-		String line = null;
+		if(delist.isEmpty()){
+			String line = null;
 		
-		
-		try {
+			try {
 			
 			
-			BufferedReader reader = new BufferedReader(new FileReader(DAILYEXPENSEPATH));
+				BufferedReader reader = new BufferedReader(new FileReader(DAILYEXPENSEPATH));
 			
-			//1,33180000,2025-01-01
-			while ((line = reader.readLine()) != null) {
+				//1,33180000,2025-01-01
+				while ((line = reader.readLine()) != null) {
 				
-				String[] temp = line.split(",");
+					String[] temp = line.split(",");
 				
-				DailyExpense dailyExpense = new DailyExpense(Integer.parseInt(temp[0])
-															, Integer.parseInt(temp[1])
-															, temp[2]
-															);
-				delist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
+					DailyExpense dailyExpense = new DailyExpense(Integer.parseInt(temp[0])
+																, Integer.parseInt(temp[1])
+																, temp[2]
+																);
+					delist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
 				delist.add(dailyExpense);
+				}
+			
+			
+				reader.close();
+			
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			
-			
-			reader.close();
-			
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		
 	}
 	
 	public static void dailyExpenseSave() {
@@ -1018,7 +1058,7 @@ public class ExpenseService {
 		delist.sort((n1, n2) -> n1.getDate().compareTo(n2.getDate()));
 		try {
 			
-			BufferedWriter writer = new BufferedWriter(new FileWriter(TOTALEXPENSEPATH));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(DAILYEXPENSEPATH));
 			
 			for (DailyExpense dailyExpense : delist) {
 				
