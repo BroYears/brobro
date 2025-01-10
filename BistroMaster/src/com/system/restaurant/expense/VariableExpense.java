@@ -77,6 +77,10 @@ public class VariableExpense {
 		this.date = date;
 	}
 
+	public int getTotalPrice(){
+		return waterTax + electricityBill + gasBill + ingredient + descripton;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

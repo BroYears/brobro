@@ -1,14 +1,17 @@
 package com.system.restaurant;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import com.system.restaurant.domain.Main_Uodol;
 import com.system.restaurant.domain.TodaysInfo;
+import com.system.restaurant.employee.Admin;
 import com.system.restaurant.view.MainScreen;
-import com.system.restaurant.view.Templates;
 
 public class Main {
 
@@ -19,8 +22,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-
-		
+		Admin admin = new Admin();
 		Main dayEndDayStart = new Main();
 		Scanner scan = new Scanner(System.in);
 		dayEndDayStart.loadDate();
@@ -29,6 +31,7 @@ public class Main {
 
 		for (String d : daysModify) {
 			today = d;
+			
 			System.out.println();
 			System.out.println("🙂 " + "오늘은 " + "[" + today + "]" + "입니다. 즐거운 하루 보내세요! 🌞");
 			System.out.println();
@@ -41,12 +44,14 @@ public class Main {
 			}
 
 			dayEndDayStart.pause(scan);
-
+			
 			System.out.println();
 			System.out.println("Today : " + today);
 			TodaysInfo.todaysInfo(today); //알림
 			dayEndDayStart.pause(scan);
 
+			admin.todo();
+			
 			MainScreen.mainScreenload(); //메뉴
 
 			dayEndDayStart.pause(scan);

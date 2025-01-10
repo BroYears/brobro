@@ -2,6 +2,8 @@ package com.system.restaurant.view;
 
 import java.util.Scanner;
 
+import com.system.restaurant.employee.EmployeeService;
+
 public class MainScreen {
 	public static void mainScreenload() {
 
@@ -17,6 +19,7 @@ public class MainScreen {
 			switch (sel) {
 				case 1: {
 					// 인력관리>우돌
+					No1Menu.loadNum1();
 					//EmployeeService.staffLoad();
 					break;
 				}

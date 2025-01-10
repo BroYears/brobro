@@ -66,6 +66,9 @@ public class NonVariableExpense {
 		this.date = date;
 	}
 
+	public int getTotalPrice(){
+		return internetFee + monthlyRent + costOfLabor;
+	}
 
 	@Override
 	public String toString() {

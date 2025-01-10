@@ -6,10 +6,8 @@ import com.system.restaurant.employee.EmployeeService;
 import com.system.restaurant.employee.User;
 
 public class EmployeeView {
-	
 	public static void subMenu(){
-		
-		System.out.println("1.인력관리");
+//		System.out.println("1.인력관리");
 		// 인력관리 View를 보여주고 Service 할 메소드 번호 선택 1 ~ 9 
 		EmployeeService.employeeMaxCount = EmployeeService.Users.size();
 		

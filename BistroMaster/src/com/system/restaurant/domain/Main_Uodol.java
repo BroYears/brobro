@@ -2,7 +2,9 @@ package com.system.restaurant.domain;
 import java.util.Scanner;
 
 public class Main_Uodol {
-	private final static String PASSWORD = "123456"; 
+//	private final static String PASSWORD = "123456";
+	private final static String PASSWORD = "1";
+	
 	
 	
 	public static boolean helloMain() {
@@ -23,7 +25,7 @@ public class Main_Uodol {
 		System.out.println();
 
 		if(!code.equals(PASSWORD)) {
-			System.err.println("잘못 입력 하셨습니다~");
+			System.err.println("잘못 입력 하셨습니다.");
 			return false;
 		}
 		

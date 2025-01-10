@@ -2,24 +2,24 @@ package com.system.restaurant.view;
 
 import java.util.Scanner;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
+
 import com.system.restaurant.menu.MenuService;
 import com.system.restaurant.menu.OrderService;
 
 public class No5Menu {
-	public static void loadNum5() { //루프2차
-		Sub_Menus_Temp.makeSubTitle("주문관리", 10);
-		Sub_Menus_Temp.makeSubCategory("1. 메뉴 관리", 10);
-		Sub_Menus_Temp.makeSubCategory("2. 주문 관리", 10);
-
-		System.out.println("메뉴 관리: 1번 | 주문 관리: 2번 | 초기화면: 0번");
-
+	public static void loadNum5() {
+		
+		
 		Scanner scan = new Scanner(System.in);
-		int sel = scan.nextInt();
-		scan.skip("\r\n");
-
 		boolean loop = true;
-
+		
+		
 		while (loop) {
+			printSubMenu();
+			int sel = scan.nextInt();
+			scan.skip("\r\n");
+			
 			switch (sel) {
 				case 1: {
 					MenuService.menuManage();
@@ -39,5 +39,13 @@ public class No5Menu {
 				}
 			}
 		}
+	}
+
+	public static void printSubMenu() {
+		Sub_Menus_Temp.makeSubTitle("주문관리", 10);
+		Sub_Menus_Temp.makeSubCategory("1. 메뉴 관리", 10);
+		Sub_Menus_Temp.makeSubCategory("2. 주문 관리", 10);
+
+		System.out.println("메뉴 관리: 1번 | 주문 관리: 2번 | 초기화면: 0번");
 	}
 }

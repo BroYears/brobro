@@ -9,21 +9,6 @@ import com.system.restaurant.income.DailySales;
 import com.system.restaurant.income.IncomeService;
 
 public class ExpenseView {
-
-	public static void expenseSelect() {
-		
-		System.out.println("매출관리\r\n");
-		System.out.println("\t1. 일별 매출");
-		System.out.println("\t2. 월별 매출");
-		System.out.println("\t3. 지출 내역확인 및 수정");
-		
-		IncomeService.selcetSales();
-		
-	}
-	
-	
-	
-	
 	public static void dailySalesCalendar() {
 		
 		Scanner scan = new Scanner(System.in);
@@ -38,13 +23,11 @@ public class ExpenseView {
 			System.out.println("---------------------------------------------------------------------------------------------------------");
 		
 			IncomeService.dailySales();
-		
-		
 			
 			System.out.println();
 			System.out.println("---------------------------------------------------------------------------------------------------------");
 			System.out.println("---------------------------------------------------------------------------------------------------------");
-		
+			
 			System.out.println("이전 화면: 0번");
 			System.out.print("입력: ");
 			
@@ -66,12 +49,14 @@ public class ExpenseView {
 		Scanner scan = new Scanner(System.in);
 		boolean loop = true;
 		
+		
 		while (loop) {
 		
 			System.out.println("\t\t\t\t\t월별 매출");
 			System.out.println();
 			System.out.println("\t\t\t\t\t\t\t\t\t\t\t단위: 원");
 			System.out.println("-----------------------------------------------------------------------------------------------------");
+			
 			IncomeService.monthlySales();
 			
 			System.out.println("-----------------------------------------------------------------------------------------------------");

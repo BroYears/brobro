@@ -15,19 +15,14 @@ public class No3Menu {
 		ExpenseService.totalExpenseLoad();
 		ExpenseService.nonVariableExpenseLoad();
 		ExpenseService.variableExpenseLoad();
+		ExpenseService.totalMonthlyExpense();
 		
 		
 		Scanner scan = new Scanner(System.in);
 		boolean loop = true;
 		
 		while (loop) {
-		Sub_Menus_Temp.makeSubTitle("매출관리", 10);
-		Sub_Menus_Temp.makeSubCategory("1. 일별 매출", 10);
-		Sub_Menus_Temp.makeSubCategory("2. 월별 매출", 10);
-		Sub_Menus_Temp.makeSubCategory("3. 지출 내역확인", 12);
-
-		System.out.println("일별 매출: 1번 | 월별 매출: 2번 | 지출 내역확인: 3번 | 초기화: 0번");
-		System.out.print("입력: ");
+		printSubMenu();
 		int sel = scan.nextInt();
 
 			switch (sel) {
@@ -54,5 +49,15 @@ public class No3Menu {
 		}
 	
 
+	}
+
+	public static void printSubMenu() {
+		Sub_Menus_Temp.makeSubTitle("매출관리", 10);
+		Sub_Menus_Temp.makeSubCategory("1. 일별 매출", 10);
+		Sub_Menus_Temp.makeSubCategory("2. 월별 매출", 10);
+		Sub_Menus_Temp.makeSubCategory("3. 지출 내역확인", 12);
+
+		System.out.println("일별 매출: 1번 | 월별 매출: 2번 | 지출 내역확인: 3번 | 초기화: 0번");
+		System.out.print("입력: ");
 	}
 }
